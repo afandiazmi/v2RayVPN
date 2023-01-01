@@ -356,9 +356,9 @@ allowPort() {
 	# If the firewall is enabled, add the corresponding open port
 	if systemctl status netfilter-persistent 2>/dev/null | grep -q "active (exited)"; then
 		local updateFirewalldStatus=
-		if ! iptables -L | grep -q "$1(mack-a)"; then
+		if ! iptables -L | grep -q "$1(afandiazmi)"; then
 			updateFirewalldStatus=true
-			iptables -I INPUT -p tcp --dport "$1" -m comment --comment "allow $1(mack-a)" -j ACCEPT
+			iptables -I INPUT -p tcp --dport "$1" -m comment --comment "allow $1(afandiazmi)" -j ACCEPT
 		fi
 
 		if echo "${updateFirewalldStatus}" | grep -q "true"; then
@@ -1222,7 +1222,7 @@ acmeInstallSSL() {
 		txtValue=$(tail -n 10 /etc/v2ray-agent/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
 		if [[ -n "${txtValue}" ]]; then
 			echoContent green " ---> Please manually add DNS TXT record"
-			echoContent yellow " ---> Please refer to this tutorial for adding methods, https://github.com/mack-a/v2ray-agent/blob/master/documents/dns_txt.md"
+			echoContent yellow " ---> Please refer to this tutorial for adding methods, https://github.com/afandiazmi/v2RayVPN/blob/main/documents/dns_txt.md"
 			echoContent green " --->  name：_acme-challenge"
 			echoContent green " --->  value：${txtValue}"
 			echoContent yellow " ---> Please wait for 1-2 minutes after the addition is complete"
@@ -3077,7 +3077,7 @@ customCDNIP() {
 	echoContent red "\n=============================================================="
 	echoContent yellow "# Notes"
 	echoContent yellow "\nTutorial address:"
-	echoContent skyBlue "https://github.com/mack-a/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
+	echoContent skyBlue "https://github.com/afandiazmi/v2RayVPN/blob/main/documents/optimize_V2Ray.md"
 	echoContent red "\nIf you don't know about Cloudflare optimization, please don't use"
 	echoContent yellow "\n 1.Mobile: 104.16.123.96"
 	echoContent yellow " 2.Unicom: www.cloudflare.com"
@@ -4102,7 +4102,7 @@ EOF
 # Script shortcut
 aliasInstall() {
 
-	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:mack-a"; then
+	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:afandiazmi"; then
 		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
 		local vasmaType=
 		if [[ -d "/usr/bin/" ]]; then
@@ -4538,7 +4538,7 @@ dokodemoDoorUnblockStreamingMedia() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : Unlock streaming media with any door landing machine"
 	echoContent red "\n=============================================================="
 	echoContent yellow "# Notes"
-	echoContent yellow "Any door unlock details, please check this article [https://github.com/mack-a/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
+	echoContent yellow "Any door unlock details, please check this article [https://github.com/afandiazmi/v2RayVPN/blob/main/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
 	echoContent yellow "1.Add outbound"
 	echoContent yellow "2.Add inbound"
@@ -5432,16 +5432,16 @@ manageHysteria() {
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
-	echoContent green "author:mack-a"
+	echoContent green "author:afandiazmi"
 	echoContent green "Current version: v2.6.10"
-	echoContent green "Github:https://github.com/mack-a/v2ray-agent"
+	echoContent green "Github:https://github.com/afandiazmi/v2RayVPN"
 	echoContent green "Description: 8-in-1 coexistence script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
 	echoContent red "Promotion Area"
-	echoContent green "AFF donation: https://github.com/mack-a/v2ray-agent/blob/master/documents/donation_aff.md\n"
+	echoContent green "AFF donation: https://github.com/afandiazmi/v2RayVPN/blob/main/documents/donation_aff.md\n"
 	echoContent green "Virtual currency donation: 0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
-	echoContent green "Contact TG for promotion: https://t.me/mackaff"
+	echoContent green "Contact TG for promotion: https://t.me/AfandiAzmi"
 	echoContent red "=============================================================="
 	if [[ -n "${coreInstallType}" ]]; then
 		echoContent yellow "1.Reinstall"

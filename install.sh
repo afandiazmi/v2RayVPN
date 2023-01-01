@@ -356,9 +356,9 @@ allowPort() {
 	# 如果防火墙启动状态则添加相应的开放端口
 	if systemctl status netfilter-persistent 2>/dev/null | grep -q "active (exited)"; then
 		local updateFirewalldStatus=
-		if ! iptables -L | grep -q "$1(mack-a)"; then
+		if ! iptables -L | grep -q "$1(afandiazmi)"; then
 			updateFirewalldStatus=true
-			iptables -I INPUT -p tcp --dport "$1" -m comment --comment "allow $1(mack-a)" -j ACCEPT
+			iptables -I INPUT -p tcp --dport "$1" -m comment --comment "allow $1(afandiazmi)" -j ACCEPT
 		fi
 
 		if echo "${updateFirewalldStatus}" | grep -q "true"; then
@@ -1222,7 +1222,7 @@ acmeInstallSSL() {
 		txtValue=$(tail -n 10 /etc/v2ray-agent/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
 		if [[ -n "${txtValue}" ]]; then
 			echoContent green " ---> 请手动添加DNS TXT记录"
-			echoContent yellow " ---> 添加方法请参考此教程，https://github.com/mack-a/v2ray-agent/blob/master/documents/dns_txt.md"
+			echoContent yellow " ---> 添加方法请参考此教程，https://github.com/afandiazmi/v2RayVPN/blob/main/documents/dns_txt.md"
 			echoContent yellow " ---> 如同一个域名多台机器安装通配符证书，请添加多个TXT记录，不需要修改以前添加的TXT记录"
 			echoContent green " --->  name：_acme-challenge"
 			echoContent green " --->  value：${txtValue}"
@@ -3076,7 +3076,7 @@ customCDNIP() {
 	echoContent red "\n=============================================================="
 	echoContent yellow "# 注意事项"
 	echoContent yellow "\n教程地址:"
-	echoContent skyBlue "https://github.com/mack-a/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
+	echoContent skyBlue "https://github.com/afandiazmi/v2RayVPN/blob/main/documents/optimize_V2Ray.md"
 	echoContent red "\n如对Cloudflare优化不了解，请不要使用"
 	echoContent yellow "\n 1.移动:104.16.123.96"
 	echoContent yellow " 2.联通:www.cloudflare.com"
@@ -4101,7 +4101,7 @@ EOF
 # 脚本快捷方式
 aliasInstall() {
 
-	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:mack-a"; then
+	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:afandiazmi"; then
 		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
 		local vasmaType=
 		if [[ -d "/usr/bin/" ]]; then
@@ -4537,7 +4537,7 @@ dokodemoDoorUnblockStreamingMedia() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : 任意门落地机解锁流媒体"
 	echoContent red "\n=============================================================="
 	echoContent yellow "# 注意事项"
-	echoContent yellow "任意门解锁详解，请查看此文章[https://github.com/mack-a/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
+	echoContent yellow "任意门解锁详解，请查看此文章[https://github.com/afandiazmi/v2RayVPN/blob/main/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
 	echoContent yellow "1.添加出站"
 	echoContent yellow "2.添加入站"
@@ -5431,16 +5431,16 @@ manageHysteria() {
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
-	echoContent green "作者:mack-a"
+	echoContent green "作者:afandiazmi"
 	echoContent green "当前版本:v2.6.13"
-	echoContent green "Github:https://github.com/mack-a/v2ray-agent"
+	echoContent green "Github:https://github.com/afandiazmi/v2RayVPN"
 	echoContent green "描述:八合一共存脚本\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
 	echoContent red "                        推广区                      "
-	echoContent green "AFF捐赠：https://github.com/mack-a/v2ray-agent/blob/master/documents/donation_aff.md\n"
+	echoContent green "AFF捐赠：https://github.com/afandiazmi/v2RayVPN/blob/main/documents/donation_aff.md\n"
 	echoContent green "虚拟币捐赠：0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
-	echoContent green "推广可联系TG：https://t.me/mackaff"
+	echoContent green "推广可联系TG：https://t.me/AfandiAzmi"
 	echoContent red "=============================================================="
 	if [[ -n "${coreInstallType}" ]]; then
 		echoContent yellow "1.重新安装"
