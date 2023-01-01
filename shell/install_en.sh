@@ -261,37 +261,37 @@ readInstallType() {
 	hysteriaConfigPath=
 
 	# 1.Detect the installation directory
-	if [[ -d "/etc/v2ray-agent" ]]; then
+	if [[ -d "/etc/v2RayVPN" ]]; then
 		# Detect installation method v2ray-core
-		if [[ -d "/etc/v2ray-agent/v2ray" && -f "/etc/v2ray-agent/v2ray/v2ray" && -f "/etc/v2ray-agent/v2ray/v2ctl" ]]; then
-			if [[ -d "/etc/v2ray-agent/v2ray/conf" && -f "/etc/v2ray-agent/v2ray/conf/02_VLESS_TCP_inbounds.json" ]]; then
-				configPath=/etc/v2ray-agent/v2ray/conf/
-				if grep </etc/v2ray-agent/v2ray/conf/02_VLESS_TCP_inbounds.json -q '"security": "tls"'; then
+		if [[ -d "/etc/v2RayVPN/v2ray" && -f "/etc/v2RayVPN/v2ray/v2ray" && -f "/etc/v2RayVPN/v2ray/v2ctl" ]]; then
+			if [[ -d "/etc/v2RayVPN/v2ray/conf" && -f "/etc/v2RayVPN/v2ray/conf/02_VLESS_TCP_inbounds.json" ]]; then
+				configPath=/etc/v2RayVPN/v2ray/conf/
+				if grep </etc/v2RayVPN/v2ray/conf/02_VLESS_TCP_inbounds.json -q '"security": "tls"'; then
 					# v2ray-core without XTLS
 					coreInstallType=2
-					ctlPath=/etc/v2ray-agent/v2ray/v2ctl
-				elif grep </etc/v2ray-agent/v2ray/conf/02_VLESS_TCP_inbounds.json -q '"security": "xtls"'; then
+					ctlPath=/etc/v2RayVPN/v2ray/v2ctl
+				elif grep </etc/v2RayVPN/v2ray/conf/02_VLESS_TCP_inbounds.json -q '"security": "xtls"'; then
 					# v2ray-core with XTLS
-					ctlPath=/etc/v2ray-agent/v2ray/v2ctl
+					ctlPath=/etc/v2RayVPN/v2ray/v2ctl
 					coreInstallType=3
 				fi
 			fi
 		fi
 
-		if [[ -d "/etc/v2ray-agent/xray" && -f "/etc/v2ray-agent/xray/xray" ]]; then
+		if [[ -d "/etc/v2RayVPN/xray" && -f "/etc/v2RayVPN/xray/xray" ]]; then
 			# Check xray-core here
-			if [[ -d "/etc/v2ray-agent/xray/conf" ]] && [[ -f "/etc/v2ray-agent/xray/conf/02_VLESS_TCP_inbounds.json" || -f "/etc/v2ray-agent/xray/conf/02_trojan_TCP_inbounds.json" ]]; then
+			if [[ -d "/etc/v2RayVPN/xray/conf" ]] && [[ -f "/etc/v2RayVPN/xray/conf/02_VLESS_TCP_inbounds.json" || -f "/etc/v2RayVPN/xray/conf/02_trojan_TCP_inbounds.json" ]]; then
 				# xray-core
-				configPath=/etc/v2ray-agent/xray/conf/
-				ctlPath=/etc/v2ray-agent/xray/xray
+				configPath=/etc/v2RayVPN/xray/conf/
+				ctlPath=/etc/v2RayVPN/xray/xray
 				coreInstallType=1
 			fi
 		fi
 
-		if [[ -d "/etc/v2ray-agent/hysteria" && -f "/etc/v2ray-agent/hysteria/hysteria" ]]; then
+		if [[ -d "/etc/v2RayVPN/hysteria" && -f "/etc/v2RayVPN/hysteria/hysteria" ]]; then
 			# Check hysteria here
-			if [[ -d "/etc/v2ray-agent/hysteria/conf" ]] && [[ -f "/etc/v2ray-agent/hysteria/conf/config.json" ]] && [[ -f "/etc/v2ray-agent/hysteria/conf/client_network.json" ]]; then
-				hysteriaConfigPath=/etc/v2ray-agent/hysteria/conf/
+			if [[ -d "/etc/v2RayVPN/hysteria/conf" ]] && [[ -f "/etc/v2RayVPN/hysteria/conf/config.json" ]] && [[ -f "/etc/v2RayVPN/hysteria/conf/client_network.json" ]]; then
+				hysteriaConfigPath=/etc/v2RayVPN/hysteria/conf/
 			fi
 		fi
 
@@ -568,19 +568,19 @@ showInstallStatus() {
 # clean up old residue
 cleanUp() {
 	if [[ "$1" == "v2rayClean" ]]; then
-		rm -rf "$(find /etc/v2ray-agent/v2ray/* | grep -E '(config_full.json|conf)')"
+		rm -rf "$(find /etc/v2RayVPN/v2ray/* | grep -E '(config_full.json|conf)')"
 		handleV2Ray stop >/dev/null
 		rm -f /etc/systemd/system/v2ray.service
 	elif [[ "$1" == "xrayClean" ]]; then
-		rm -rf "$(find /etc/v2ray-agent/xray/* | grep -E '(config_full.json|conf)')"
+		rm -rf "$(find /etc/v2RayVPN/xray/* | grep -E '(config_full.json|conf)')"
 		handleXray stop >/dev/null
 		rm -f /etc/systemd/system/xray.service
 
 	elif [[ "$1" == "v2rayDel" ]]; then
-		rm -rf /etc/v2ray-agent/v2ray/*
+		rm -rf /etc/v2RayVPN/v2ray/*
 
 	elif [[ "$1" == "xrayDel" ]]; then
-		rm -rf /etc/v2ray-agent/xray/*
+		rm -rf /etc/v2RayVPN/xray/*
 	fi
 }
 
@@ -597,17 +597,17 @@ checkBTPanel
 
 # Initialize the installation directory
 mkdirTools() {
-	mkdir -p /etc/v2ray-agent/tls
-	mkdir -p /etc/v2ray-agent/subscribe
-	mkdir -p /etc/v2ray-agent/subscribe_tmp
-	mkdir -p /etc/v2ray-agent/v2ray/conf
-	mkdir -p /etc/v2ray-agent/v2ray/tmp
-	mkdir -p /etc/v2ray-agent/xray/conf
-	mkdir -p /etc/v2ray-agent/xray/tmp
-	mkdir -p /etc/v2ray-agent/trojan
-	mkdir -p /etc/v2ray-agent/hysteria/conf
+	mkdir -p /etc/v2RayVPN/tls
+	mkdir -p /etc/v2RayVPN/subscribe
+	mkdir -p /etc/v2RayVPN/subscribe_tmp
+	mkdir -p /etc/v2RayVPN/v2ray/conf
+	mkdir -p /etc/v2RayVPN/v2ray/tmp
+	mkdir -p /etc/v2RayVPN/xray/conf
+	mkdir -p /etc/v2RayVPN/xray/tmp
+	mkdir -p /etc/v2RayVPN/trojan
+	mkdir -p /etc/v2RayVPN/hysteria/conf
 	mkdir -p /etc/systemd/system/
-	mkdir -p /tmp/v2ray-agent-tls/
+	mkdir -p /tmp/v2RayVPN-tls/
 }
 
 # install toolkit
@@ -624,8 +624,8 @@ installTools() {
 
 	echoContent green " ---> Check and install updates [The new machine will be very slow, if there is no response for a long time, please stop it manually and execute it again]"
 
-	${upgrade} >/etc/v2ray-agent/install.log 2>&1
-	if grep <"/etc/v2ray-agent/install.log" -q "changed"; then
+	${upgrade} >/etc/v2RayVPN/install.log 2>&1
+	if grep <"/etc/v2RayVPN/install.log" -q "changed"; then
 		${updateReleaseInfoChange} >/dev/null 2>&1
 	fi
 
@@ -754,11 +754,11 @@ installTools() {
 
 	if [[ ! -d "$HOME/.acme.sh" ]] || [[ -d "$HOME/.acme.sh" && -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
 		echoContent green " ---> install acme.sh"
-		curl -s https://get.acme.sh | sh >/etc/v2ray-agent/tls/acme.log 2>&1
+		curl -s https://get.acme.sh | sh >/etc/v2RayVPN/tls/acme.log 2>&1
 
 		if [[ ! -d "$HOME/.acme.sh" ]] || [[ -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
 			echoContent red "acme installation failed--->"
-			tail -n 100 /etc/v2ray-agent/tls/acme.log
+			tail -n 100 /etc/v2RayVPN/tls/acme.log
 			echoContent yellow "Error troubleshooting:"
 			echoContent red " 1.Failed to obtain Github files, please wait for Github to recover and try, the recovery progress can be viewed at [https://www.githubstatus.com/]"
 			echoContent red "There is a bug in the 2.acme.sh script, see [https://github.com/acmesh-official/acme.sh] issues"
@@ -865,12 +865,12 @@ initTLSNginxConfig() {
 			echoContent yellow "\n ---> Domain name: ${domain}"
 		else
 			echo
-			echoContent yellow "Please enter the domain name to be configured Example: www.v2ray-agent.com --->"
+			echoContent yellow "Please enter the domain name to be configured Example: www.v2RayVPN.com --->"
 			read -r -p "domain name:" domain
 		fi
 	else
 		echo
-		echoContent yellow "Please enter the domain name to be configured Example: www.v2ray-agent.com --->"
+		echoContent yellow "Please enter the domain name to be configured Example: www.v2RayVPN.com --->"
 		read -r -p "domain name:" domain
 	fi
 
@@ -966,7 +966,7 @@ server {
 
 	location /s/ {
     	add_header Content-Type text/plain;
-    	alias /etc/v2ray-agent/subscribe/;
+    	alias /etc/v2RayVPN/subscribe/;
     }
 
     location /${currentPath}grpc {
@@ -1003,7 +1003,7 @@ server {
 	root /usr/share/nginx/html;
 	location /s/ {
     		add_header Content-Type text/plain;
-    		alias /etc/v2ray-agent/subscribe/;
+    		alias /etc/v2RayVPN/subscribe/;
     }
 	location /${currentPath}grpc {
 		client_max_body_size 0;
@@ -1028,7 +1028,7 @@ server {
 	root /usr/share/nginx/html;
 	location /s/ {
     		add_header Content-Type text/plain;
-    		alias /etc/v2ray-agent/subscribe/;
+    		alias /etc/v2RayVPN/subscribe/;
     }
 	location /${currentPath}trojangrpc {
 		client_max_body_size 0;
@@ -1052,7 +1052,7 @@ server {
 	root /usr/share/nginx/html;
 	location /s/ {
     		add_header Content-Type text/plain;
-    		alias /etc/v2ray-agent/subscribe/;
+    		alias /etc/v2RayVPN/subscribe/;
     }
 	location / {
 	}
@@ -1067,7 +1067,7 @@ server {
 	root /usr/share/nginx/html;
 	location /s/ {
 		add_header Content-Type text/plain;
-		alias /etc/v2ray-agent/subscribe/;
+		alias /etc/v2RayVPN/subscribe/;
 	}
 	location / {
 		add_header Strict-Transport-Security "max-age=15552000; preload" always;
@@ -1181,8 +1181,8 @@ switchSSLType() {
 			sslType="letsencrypt"
 			;;
 		esac
-		touch /etc/v2ray-agent/tls
-		echo "${sslType}" >/etc/v2ray-agent/tls/ssl_type
+		touch /etc/v2RayVPN/tls
+		echo "${sslType}" >/etc/v2RayVPN/tls/ssl_type
 
 	fi
 }
@@ -1216,10 +1216,10 @@ selectAcmeInstallSSL() {
 acmeInstallSSL() {
 	if [[ "${dnsSSLStatus}" == "true" ]]; then
 
-		sudo "$HOME/.acme.sh/acme.sh" --issue -d "*.${dnsTLSDomain}" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please --standalone -k ec-256 --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
+		sudo "$HOME/.acme.sh/acme.sh" --issue -d "*.${dnsTLSDomain}" --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please --standalone -k ec-256 --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2RayVPN/tls/acme.log >/dev/null
 
 		local txtValue=
-		txtValue=$(tail -n 10 /etc/v2ray-agent/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
+		txtValue=$(tail -n 10 /etc/v2RayVPN/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
 		if [[ -n "${txtValue}" ]]; then
 			echoContent green " ---> Please manually add DNS TXT record"
 			echoContent yellow " ---> Please refer to this tutorial for adding methods, https://github.com/afandiazmi/v2RayVPN/blob/main/documents/dns_txt.md"
@@ -1234,7 +1234,7 @@ acmeInstallSSL() {
 				if [[ "${txtAnswer}" == "${txtValue}" ]]; then
 					echoContent green " ---> TXT record verification passed"
 					echoContent green "---> Generating certificate"
-					sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
+					sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2RayVPN/tls/acme.log >/dev/null
 				else
 					echoContent red " ---> Authentication failed, please try again after 1-2 minutes"
 					acmeInstallSSL
@@ -1246,7 +1246,7 @@ acmeInstallSSL() {
 		fi
 	else
 		echoContent green "---> Generating certificate"
-		sudo "$HOME/.acme.sh/acme.sh" --issue -d "${tlsDomain}" --standalone -k ec-256 --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
+		sudo "$HOME/.acme.sh/acme.sh" --issue -d "${tlsDomain}" --standalone -k ec-256 --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2RayVPN/tls/acme.log >/dev/null
 	fi
 }
 # custom port
@@ -1298,18 +1298,18 @@ installTLS() {
 	local tlsDomain=${domain}
 
 	# install tls
-	if [[ -f "/etc/v2ray-agent/tls/${tlsDomain}.crt" && -f "/etc/v2ray-agent/tls/${tlsDomain}.key" && -n $(cat "/etc/v2ray-agent/tls/${tlsDomain}.crt") ]] || [[ -d "$HOME/.acme.sh/${tlsDomain}_ecc" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.key" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.cer" ]]; then
+	if [[ -f "/etc/v2RayVPN/tls/${tlsDomain}.crt" && -f "/etc/v2RayVPN/tls/${tlsDomain}.key" && -n $(cat "/etc/v2RayVPN/tls/${tlsDomain}.crt") ]] || [[ -d "$HOME/.acme.sh/${tlsDomain}_ecc" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.key" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.cer" ]]; then
 		echoContent green " ---> Certificate detected"
 		# checkTLStatus
 		renewalTLS
 
-		if [[ -z $(find /etc/v2ray-agent/tls/ -name "${tlsDomain}.crt") ]] || [[ -z $(find /etc/v2ray-agent/tls/ -name "${tlsDomain}.key") ]] || [[ -z $(cat "/etc/v2ray-agent/tls/${tlsDomain}.crt") ]]; then
-			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${tlsDomain}" --fullchainpath "/etc/v2ray-agent/tls/${tlsDomain}.crt" --keypath "/etc/v2ray-agent/tls/${tlsDomain}.key" --ecc >/dev/null
+		if [[ -z $(find /etc/v2RayVPN/tls/ -name "${tlsDomain}.crt") ]] || [[ -z $(find /etc/v2RayVPN/tls/ -name "${tlsDomain}.key") ]] || [[ -z $(cat "/etc/v2RayVPN/tls/${tlsDomain}.crt") ]]; then
+			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${tlsDomain}" --fullchainpath "/etc/v2RayVPN/tls/${tlsDomain}.crt" --keypath "/etc/v2RayVPN/tls/${tlsDomain}.key" --ecc >/dev/null
 		else
 			echoContent yellow " ---> If not expired or custom certificate, please select [n]\n"
 			read -r -p "Reinstall? [y/n]:" reInstallStatus
 			if [[ "${reInstallStatus}" == "y" ]]; then
-				rm -rf /etc/v2ray-agent/tls/*
+				rm -rf /etc/v2RayVPN/tls/*
 				installTLS "$1"
 			fi
 		fi
@@ -1328,15 +1328,15 @@ installTLS() {
 		if [[ "${installDNSACMEStatus}" == "true" ]]; then
 			echo
 			if [[ -d "$HOME/.acme.sh/*.${dnsTLSDomain}_ecc" && -f "$HOME/.acme.sh/*.${dnsTLSDomain}_ecc/*.${dnsTLSDomain}.key" && -f "$HOME/.acme.sh/*.${dnsTLSDomain}_ecc/*.${dnsTLSDomain}.cer" ]]; then
-				sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${dnsTLSDomain}" -d "*.${dnsTLSDomain}" --fullchainpath "/etc/v2ray-agent/tls/${tlsDomain}.crt" --keypath "/etc/v2ray-agent/tls/${tlsDomain}.key" --ecc >/dev/null
+				sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${dnsTLSDomain}" -d "*.${dnsTLSDomain}" --fullchainpath "/etc/v2RayVPN/tls/${tlsDomain}.crt" --keypath "/etc/v2RayVPN/tls/${tlsDomain}.key" --ecc >/dev/null
 			fi
 
 		elif [[ -d "$HOME/.acme.sh/${tlsDomain}_ecc" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.key" && -f "$HOME/.acme.sh/${tlsDomain}_ecc/${tlsDomain}.cer" ]]; then
-			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${tlsDomain}" --fullchainpath "/etc/v2ray-agent/tls/${tlsDomain}.crt" --keypath "/etc/v2ray-agent/tls/${tlsDomain}.key" --ecc >/dev/null
+			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${tlsDomain}" --fullchainpath "/etc/v2RayVPN/tls/${tlsDomain}.crt" --keypath "/etc/v2RayVPN/tls/${tlsDomain}.key" --ecc >/dev/null
 		fi
 
-		if [[ ! -f "/etc/v2ray-agent/tls/${tlsDomain}.crt" || ! -f "/etc/v2ray-agent/tls/${tlsDomain}.key" ]] || [[ -z $(cat "/etc/v2ray-agent/tls/${tlsDomain}.key") || -z $(cat "/etc/v2ray-agent/tls/${tlsDomain}.crt") ]]; then
-			tail -n 10 /etc/v2ray-agent/tls/acme.log
+		if [[ ! -f "/etc/v2RayVPN/tls/${tlsDomain}.crt" || ! -f "/etc/v2RayVPN/tls/${tlsDomain}.key" ]] || [[ -z $(cat "/etc/v2RayVPN/tls/${tlsDomain}.key") || -z $(cat "/etc/v2RayVPN/tls/${tlsDomain}.crt") ]]; then
+			tail -n 10 /etc/v2RayVPN/tls/acme.log
 			if [[ ${installTLSCount} == "1" ]]; then
 				echoContent red " ---> TLS installation failed, please check the acme log"
 				exit 0
@@ -1349,7 +1349,7 @@ installTLS() {
 			allowPort 443
 			echoContent yellow " ---> Retry to install TLS certificate"
 
-			if tail -n 10 /etc/v2ray-agent/tls/acme.log | grep -q "Could not validate email address as valid"; then
+			if tail -n 10 /etc/v2RayVPN/tls/acme.log | grep -q "Could not validate email address as valid"; then
 				echoContent red " ---> The mailbox cannot be verified by the SSL manufacturer, please re-enter"
 				echo
 				customSSLEmail "validate email"
@@ -1439,9 +1439,9 @@ nginxBlog() {
 # Modify http_port_t port
 updateSELinuxHTTPPortT() {
 
-	$(find /usr/bin /usr/sbin | grep -w journalctl) -xe >/etc/v2ray-agent/nginx_error.log 2>&1
+	$(find /usr/bin /usr/sbin | grep -w journalctl) -xe >/etc/v2RayVPN/nginx_error.log 2>&1
 
-	if find /usr/bin /usr/sbin | grep -q -w semanage && find /usr/bin /usr/sbin | grep -q -w getenforce && grep -E "31300|31302" </etc/v2ray-agent/nginx_error.log | grep -q "Permission denied"; then
+	if find /usr/bin /usr/sbin | grep -q -w semanage && find /usr/bin /usr/sbin | grep -q -w getenforce && grep -E "31300|31302" </etc/v2RayVPN/nginx_error.log | grep -q "Permission denied"; then
 		echoContent red "---> Check if SELinux port is open"
 		if ! $(find /usr/bin /usr/sbin | grep -w semanage) port -l | grep http_port | grep -q 31300; then
 			$(find /usr/bin /usr/sbin | grep -w semanage) port -a -t http_port_t -p tcp 31300
@@ -1463,7 +1463,7 @@ updateSELinuxHTTPPortT() {
 handleNginx() {
 
 	if [[ -z $(pgrep -f "nginx") ]] && [[ "$1" == "start" ]]; then
-		systemctl start nginx 2>/etc/v2ray-agent/nginx_error.log
+		systemctl start nginx 2>/etc/v2RayVPN/nginx_error.log
 
 		sleep 0.5
 
@@ -1471,7 +1471,7 @@ handleNginx() {
 			echoContent red "---> Nginx failed to start"
 			echoContent red " ---> Please try to install nginx manually and execute the script again"
 
-			if grep -q "journalctl -xe" </etc/v2ray-agent/nginx_error.log; then
+			if grep -q "journalctl -xe" </etc/v2RayVPN/nginx_error.log; then
 				updateSELinuxHTTPPortT
 			fi
 
@@ -1493,12 +1493,12 @@ handleNginx() {
 # Scheduled task to update tls certificate
 installCronTLS() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Add scheduled maintenance certificate"
-	crontab -l >/etc/v2ray-agent/backup_crontab.cron
+	crontab -l >/etc/v2RayVPN/backup_crontab.cron
 	local historyCrontab
-	historyCrontab=$(sed '/v2ray-agent/d;/acme.sh/d' /etc/v2ray-agent/backup_crontab.cron)
-	echo "${historyCrontab}" >/etc/v2ray-agent/backup_crontab.cron
-	echo "30 1 * * * /bin/bash /etc/v2ray-agent/install.sh RenewTLS >> /etc/v2ray-agent/crontab_tls.log 2>&1" >>/etc/v2ray-agent/backup_crontab.cron
-	crontab /etc/v2ray-agent/backup_crontab.cron
+	historyCrontab=$(sed '/v2RayVPN/d;/acme.sh/d' /etc/v2RayVPN/backup_crontab.cron)
+	echo "${historyCrontab}" >/etc/v2RayVPN/backup_crontab.cron
+	echo "30 1 * * * /bin/bash /etc/v2RayVPN/install.sh RenewTLS >> /etc/v2RayVPN/crontab_tls.log 2>&1" >>/etc/v2RayVPN/backup_crontab.cron
+	crontab /etc/v2RayVPN/backup_crontab.cron
 	echoContent green "\n ---> Adding the timing maintenance certificate successfully"
 }
 
@@ -1514,8 +1514,8 @@ renewalTLS() {
 		domain=${tlsDomain}
 	fi
 
-	if [[ -f "/etc/v2ray-agent/tls/ssl_type" ]]; then
-		if grep -q "buypass" <"/etc/v2ray-agent/tls/ssl_type"; then
+	if [[ -f "/etc/v2RayVPN/tls/ssl_type" ]]; then
+		if grep -q "buypass" <"/etc/v2RayVPN/tls/ssl_type"; then
 			sslRenewalDays=180
 		fi
 	fi
@@ -1549,7 +1549,7 @@ renewalTLS() {
 			echoContent yellow " ---> regenerate certificate"
 			handleNginx stop
 			sudo "$HOME/.acme.sh/acme.sh" --cron --home "$HOME/.acme.sh"
-			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${domain}" --fullchainpath /etc/v2ray-agent/tls/"${domain}.crt" --keypath /etc/v2ray-agent/tls/"${domain}.key" --ecc
+			sudo "$HOME/.acme.sh/acme.sh" --installcert -d "${domain}" --fullchainpath /etc/v2RayVPN/tls/"${domain}.crt" --keypath /etc/v2RayVPN/tls/"${domain}.key" --ecc
 			reloadCore
 			handleNginx start
 		else
@@ -1597,25 +1597,25 @@ installV2Ray() {
 
 		echoContent green " ---> v2ray-core version: ${version}"
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2RayVPN/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
 		else
-			wget -c -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P /etc/v2RayVPN/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
-		unzip -o "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2ray-agent/v2ray >/dev/null
-		rm -rf "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip"
+		unzip -o "/etc/v2RayVPN/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2RayVPN/v2ray >/dev/null
+		rm -rf "/etc/v2RayVPN/v2ray/${v2rayCoreCPUVendor}.zip"
 	else
 		if [[ "${selectCoreType}" == "3" ]]; then
 			echoContent green " ---> lock v2ray-core version to v4.32.1"
-			rm -f /etc/v2ray-agent/v2ray/v2ray
-			rm -f /etc/v2ray-agent/v2ray/v2ctl
+			rm -f /etc/v2RayVPN/v2ray/v2ray
+			rm -f /etc/v2RayVPN/v2ray/v2ctl
 			installV2Ray "$1"
 		else
-			echoContent green " ---> v2ray-core version:$(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)"
+			echoContent green " ---> v2ray-core version:$(/etc/v2RayVPN/v2ray/v2ray --version | awk '{print $2}' | head -1)"
 			read -r -p "Update, upgrade? [y/n]:" reInstallV2RayStatus
 			if [[ "${reInstallV2RayStatus}" == "y" ]]; then
-				rm -f /etc/v2ray-agent/v2ray/v2ray
-				rm -f /etc/v2ray-agent/v2ray/v2ctl
+				rm -f /etc/v2RayVPN/v2ray/v2ray
+				rm -f /etc/v2RayVPN/v2ray/v2ctl
 				installV2Ray "$1"
 			fi
 		fi
@@ -1633,17 +1633,17 @@ installHysteria() {
 
 		echoContent green " ---> Hysteria version: ${version}"
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/hysteria/ "https://github.com/apernet/hysteria/hysteria/releases/download/${version}/${hysteriaCoreCPUVendor}"
+			wget -c -q --show-progress -P /etc/v2RayVPN/hysteria/ "https://github.com/apernet/hysteria/hysteria/releases/download/${version}/${hysteriaCoreCPUVendor}"
 		else
-			wget -c -P /etc/v2ray-agent/hysteria/ "https://github.com/apernet/hysteria/hysteria/releases/download/${version}/${hysteriaCoreCPUVendor}" >/dev/null 2>&1
+			wget -c -P /etc/v2RayVPN/hysteria/ "https://github.com/apernet/hysteria/hysteria/releases/download/${version}/${hysteriaCoreCPUVendor}" >/dev/null 2>&1
 		fi
-		mv "/etc/v2ray-agent/hysteria/${hysteriaCoreCPUVendor}" /etc/v2ray-agent/hysteria/hysteria
-		chmod 655 /etc/v2ray-agent/hysteria/hysteria
+		mv "/etc/v2RayVPN/hysteria/${hysteriaCoreCPUVendor}" /etc/v2RayVPN/hysteria/hysteria
+		chmod 655 /etc/v2RayVPN/hysteria/hysteria
 	else
-		echoContent green " ---> Hysteria version:$(/etc/v2ray-agent/hysteria/hysteria --version | awk '{print $3}')"
+		echoContent green " ---> Hysteria version:$(/etc/v2RayVPN/hysteria/hysteria --version | awk '{print $3}')"
 		read -r -p "Update, upgrade? [y/n]:" reInstallHysteriaStatus
 		if [[ "${reInstallHysteriaStatus}" == "y" ]]; then
-			rm -f /etc/v2ray-agent/hysteria/hysteria
+			rm -f /etc/v2RayVPN/hysteria/hysteria
 			installHysteria "$1"
 		fi
 	fi
@@ -1660,19 +1660,19 @@ installXray() {
 
 		echoContent green " ---> Xray-core version: ${version}"
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2RayVPN/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip"
 		else
-			wget -c -P /etc/v2ray-agent/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P /etc/v2RayVPN/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
-		unzip -o "/etc/v2ray-agent/xray/${xrayCoreCPUVendor}.zip" -d /etc/v2ray-agent/xray >/dev/null
-		rm -rf "/etc/v2ray-agent/xray/${xrayCoreCPUVendor}.zip"
-		chmod 655 /etc/v2ray-agent/xray/xray
+		unzip -o "/etc/v2RayVPN/xray/${xrayCoreCPUVendor}.zip" -d /etc/v2RayVPN/xray >/dev/null
+		rm -rf "/etc/v2RayVPN/xray/${xrayCoreCPUVendor}.zip"
+		chmod 655 /etc/v2RayVPN/xray/xray
 	else
-		echoContent green " ---> Xray-core version:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+		echoContent green " ---> Xray-core version:$(/etc/v2RayVPN/xray/xray --version | awk '{print $2}' | head -1)"
 		read -r -p "Update, upgrade? [y/n]:" reInstallXrayStatus
 		if [[ "${reInstallXrayStatus}" == "y" ]]; then
-			rm -f /etc/v2ray-agent/xray/xray
+			rm -f /etc/v2RayVPN/xray/xray
 			installXray "$1"
 		fi
 	fi
@@ -1681,7 +1681,7 @@ installXray() {
 # v2ray version management
 v2rayVersionManageMenu() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : V2Ray version management"
-	if [[ ! -d "/etc/v2ray-agent/v2ray/" ]]; then
+	if [[ ! -d "/etc/v2RayVPN/v2ray/" ]]; then
 		echoContent red " ---> No installation directory detected, please execute the script to install the content"
 		menu
 		exit 0
@@ -1724,7 +1724,7 @@ v2rayVersionManageMenu() {
 # xray version management
 xrayVersionManageMenu() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Xray Version Management"
-	if [[ ! -d "/etc/v2ray-agent/xray/" ]]; then
+	if [[ ! -d "/etc/v2RayVPN/xray/" ]]; then
 		echoContent red " ---> No installation directory detected, please execute the script to install the content"
 		menu
 		exit 0
@@ -1786,17 +1786,17 @@ updateV2Ray() {
 		echoContent green " ---> v2ray-core version: ${version}"
 
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2RayVPN/v2ray/ "https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip"
 		else
-			wget -c -P "/etc/v2ray-agent/v2ray/ https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P "/etc/v2RayVPN/v2ray/ https://github.com/v2fly/v2ray-core/releases/download/${version}/${v2rayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
-		unzip -o "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2ray-agent/v2ray >/dev/null
-		rm -rf "/etc/v2ray-agent/v2ray/${v2rayCoreCPUVendor}.zip"
+		unzip -o "/etc/v2RayVPN/v2ray/${v2rayCoreCPUVendor}.zip" -d /etc/v2RayVPN/v2ray >/dev/null
+		rm -rf "/etc/v2RayVPN/v2ray/${v2rayCoreCPUVendor}.zip"
 		handleV2Ray stop
 		handleV2Ray start
 	else
-		echoContent green " ---> Current v2ray-core version: $(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)"
+		echoContent green " ---> Current v2ray-core version: $(/etc/v2RayVPN/v2ray/v2ray --version | awk '{print $2}' | head -1)"
 
 		if [[ -n "$1" ]]; then
 			version=$1
@@ -1811,24 +1811,24 @@ updateV2Ray() {
 			read -r -p "The rollback version is ${version}, do you want to continue? [y/n]:" rollbackV2RayStatus
 			if [[ "${rollbackV2RayStatus}" == "y" ]]; then
 				if [[ "${coreInstallType}" == "2" || "${coreInstallType}" == "3" ]]; then
-					echoContent green " ---> Current v2ray-core version: $(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)"
+					echoContent green " ---> Current v2ray-core version: $(/etc/v2RayVPN/v2ray/v2ray --version | awk '{print $2}' | head -1)"
 				elif [[ "${coreInstallType}" == "1" ]]; then
-					echoContent green " ---> Current Xray-core version: $(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+					echoContent green " ---> Current Xray-core version: $(/etc/v2RayVPN/xray/xray --version | awk '{print $2}' | head -1)"
 				fi
 
 				handleV2Ray stop
-				rm -f /etc/v2ray-agent/v2ray/v2ray
-				rm -f /etc/v2ray-agent/v2ray/v2ctl
+				rm -f /etc/v2RayVPN/v2ray/v2ray
+				rm -f /etc/v2RayVPN/v2ray/v2ctl
 				updateV2Ray "${version}"
 			else
 				echoContent green " ---> Abort the fallback version"
 			fi
-		elif [[ "${version}" == "v$(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)" ]]; then
+		elif [[ "${version}" == "v$(/etc/v2RayVPN/v2ray/v2ray --version | awk '{print $2}' | head -1)" ]]; then
 			read -r -p "The current version is the same as the latest version, do you want to reinstall? [y/n]:" reInstallV2RayStatus
 			if [[ "${reInstallV2RayStatus}" == "y" ]]; then
 				handleV2Ray stop
-				rm -f /etc/v2ray-agent/v2ray/v2ray
-				rm -f /etc/v2ray-agent/v2ray/v2ctl
+				rm -f /etc/v2RayVPN/v2ray/v2ray
+				rm -f /etc/v2RayVPN/v2ray/v2ctl
 				updateV2Ray
 			else
 				echoContent green " ---> Abort reinstallation"
@@ -1836,8 +1836,8 @@ updateV2Ray() {
 		else
 			read -r -p "The latest version is: ${version}, update? [y/n]:" installV2RayStatus
 			if [[ "${installV2RayStatus}" == "y" ]]; then
-				rm -f /etc/v2ray-agent/v2ray/v2ray
-				rm -f /etc/v2ray-agent/v2ray/v2ctl
+				rm -f /etc/v2RayVPN/v2ray/v2ray
+				rm -f /etc/v2RayVPN/v2ray/v2ctl
 				updateV2Ray
 			else
 				echoContent green " ---> Abort update"
@@ -1860,18 +1860,18 @@ updateXray() {
 		echoContent green " ---> Xray-core version: ${version}"
 
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /etc/v2ray-agent/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip"
+			wget -c -q --show-progress -P /etc/v2RayVPN/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip"
 		else
-			wget -c -P /etc/v2ray-agent/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip" >/dev/null 2>&1
+			wget -c -P /etc/v2RayVPN/xray/ "https://github.com/XTLS/Xray-core/releases/download/${version}/${xrayCoreCPUVendor}.zip" >/dev/null 2>&1
 		fi
 
-		unzip -o "/etc/v2ray-agent/xray/${xrayCoreCPUVendor}.zip" -d /etc/v2ray-agent/xray >/dev/null
-		rm -rf "/etc/v2ray-agent/xray/${xrayCoreCPUVendor}.zip"
-		chmod 655 /etc/v2ray-agent/xray/xray
+		unzip -o "/etc/v2RayVPN/xray/${xrayCoreCPUVendor}.zip" -d /etc/v2RayVPN/xray >/dev/null
+		rm -rf "/etc/v2RayVPN/xray/${xrayCoreCPUVendor}.zip"
+		chmod 655 /etc/v2RayVPN/xray/xray
 		handleXray stop
 		handleXray start
 	else
-		echoContent green " ---> Current Xray-core version: $(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+		echoContent green " ---> Current Xray-core version: $(/etc/v2RayVPN/xray/xray --version | awk '{print $2}' | head -1)"
 
 		if [[ -n "$1" ]]; then
 			version=$1
@@ -1882,20 +1882,20 @@ updateXray() {
 		if [[ -n "$1" ]]; then
 			read -r -p "The rollback version is ${version}, do you want to continue? [y/n]:" rollbackXrayStatus
 			if [[ "${rollbackXrayStatus}" == "y" ]]; then
-				echoContent green " ---> Current Xray-core version: $(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+				echoContent green " ---> Current Xray-core version: $(/etc/v2RayVPN/xray/xray --version | awk '{print $2}' | head -1)"
 
 				handleXray stop
-				rm -f /etc/v2ray-agent/xray/xray
+				rm -f /etc/v2RayVPN/xray/xray
 				updateXray "${version}"
 			else
 				echoContent green " ---> Abort the fallback version"
 			fi
-		elif [[ "${version}" == "v$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)" ]]; then
+		elif [[ "${version}" == "v$(/etc/v2RayVPN/xray/xray --version | awk '{print $2}' | head -1)" ]]; then
 			read -r -p "The current version is the same as the latest version, do you want to reinstall? [y/n]:" reInstallXrayStatus
 			if [[ "${reInstallXrayStatus}" == "y" ]]; then
 				handleXray stop
-				rm -f /etc/v2ray-agent/xray/xray
-				rm -f /etc/v2ray-agent/xray/xray
+				rm -f /etc/v2RayVPN/xray/xray
+				rm -f /etc/v2RayVPN/xray/xray
 				updateXray
 			else
 				echoContent green " ---> Abort reinstallation"
@@ -1903,7 +1903,7 @@ updateXray() {
 		else
 			read -r -p "The latest version is: ${version}, update? [y/n]:" installXrayStatus
 			if [[ "${installXrayStatus}" == "y" ]]; then
-				rm -f /etc/v2ray-agent/xray/xray
+				rm -f /etc/v2RayVPN/xray/xray
 				updateXray
 			else
 				echoContent green " ---> Abort update"
@@ -1934,7 +1934,7 @@ installV2RayService() {
 	if [[ -n $(find /bin /usr/bin -name "systemctl") ]]; then
 		rm -rf /etc/systemd/system/v2ray.service
 		touch /etc/systemd/system/v2ray.service
-		execStart='/etc/v2ray-agent/v2ray/v2ray -confdir /etc/v2ray-agent/v2ray/conf'
+		execStart='/etc/v2RayVPN/v2ray/v2ray -confdir /etc/v2RayVPN/v2ray/conf'
 		cat <<EOF >/etc/systemd/system/v2ray.service
 [Unit]
 Description=V2Ray - A unified platform for anti-censorship
@@ -1968,7 +1968,7 @@ installHysteriaService() {
 	if [[ -n $(find /bin /usr/bin -name "systemctl") ]]; then
 		rm -rf /etc/systemd/system/hysteria.service
 		touch /etc/systemd/system/hysteria.service
-		execStart='/etc/v2ray-agent/hysteria/hysteria --log-level info -c /etc/v2ray-agent/hysteria/conf/config.json server'
+		execStart='/etc/v2RayVPN/hysteria/hysteria --log-level info -c /etc/v2RayVPN/hysteria/conf/config.json server'
 		cat <<EOF >/etc/systemd/system/hysteria.service
     [Unit]
     Description=Hysteria Service
@@ -2001,7 +2001,7 @@ installXrayService() {
 	if [[ -n $(find /bin /usr/bin -name "systemctl") ]]; then
 		rm -rf /etc/systemd/system/xray.service
 		touch /etc/systemd/system/xray.service
-		execStart='/etc/v2ray-agent/xray/xray run -confdir /etc/v2ray-agent/xray/conf'
+		execStart='/etc/v2RayVPN/xray/xray run -confdir /etc/v2RayVPN/xray/conf'
 		cat <<EOF >/etc/systemd/system/xray.service
 [Unit]
 Description=Xray Service
@@ -2046,7 +2046,7 @@ handleV2Ray() {
 			echoContent green " ---> V2Ray started successfully"
 		else
 			echoContent red "V2Ray failed to start"
-			echoContent red "Please manually execute [/etc/v2ray-agent/v2ray/v2ray -confdir /etc/v2ray-agent/v2ray/conf] to view the error log"
+			echoContent red "Please manually execute [/etc/v2RayVPN/v2ray/v2ray -confdir /etc/v2RayVPN/v2ray/conf] to view the error log"
 			exit 0
 		fi
 	elif [[ "$1" == "stop" ]]; then
@@ -2077,7 +2077,7 @@ handleHysteria() {
 			echoContent green " ---> Hysteria started successfully"
 		else
 			echoContent red "Hysteria failed to start"
-			echoContent red "Please manually execute [/etc/v2ray-agent/hysteria/hysteria --log-level debug -c /etc/v2ray-agent/hysteria/conf/config.json server] to view the error log"
+			echoContent red "Please manually execute [/etc/v2RayVPN/hysteria/hysteria --log-level debug -c /etc/v2RayVPN/hysteria/conf/config.json server] to view the error log"
 			exit 0
 		fi
 	elif [[ "$1" == "stop" ]]; then
@@ -2107,7 +2107,7 @@ handleXray() {
 			echoContent green "---> Xray started successfully"
 		else
 			echoContent red "Xray failed to start"
-			echoContent red "Please manually execute [/etc/v2ray-agent/xray/xray -confdir /etc/v2ray-agent/xray/conf] to view the error log"
+			echoContent red "Please manually execute [/etc/v2RayVPN/xray/xray -confdir /etc/v2RayVPN/xray/conf] to view the error log"
 			exit 0
 		fi
 	elif [[ "$1" == "stop" ]]; then
@@ -2242,7 +2242,7 @@ initHysteriaNetwork() {
 		echoContent yellow "\n ---> Uplink speed: ${hysteriaClientUploadSpeed}\n"
 	fi
 
-	cat <<EOF >/etc/v2ray-agent/hysteria/conf/client_network.json
+	cat <<EOF >/etc/v2RayVPN/hysteria/conf/client_network.json
 {
 	"hysteriaLag":"${hysteriaLag}",
 	"hysteriaClientUploadSpeed":"${hysteriaClientUploadSpeed}",
@@ -2260,13 +2260,13 @@ initHysteriaConfig() {
 	initHysteriaNetwork
 
 	getClients "${configPath}${frontingType}.json" true
-	cat <<EOF >/etc/v2ray-agent/hysteria/conf/config.json
+	cat <<EOF >/etc/v2RayVPN/hysteria/conf/config.json
 {
 	"listen": ":${hysteriaPort}",
 	"protocol": "${hysteriaProtocol}",
 	"disable_udp": false,
-	"cert": "/etc/v2ray-agent/tls/${currentHost}.crt",
-	"key": "/etc/v2ray-agent/tls/${currentHost}.key",
+	"cert": "/etc/v2RayVPN/tls/${currentHost}.crt",
+	"key": "/etc/v2RayVPN/tls/${currentHost}.key",
 	"auth": {
 		"mode": "passwords",
 		"config": []
@@ -2281,7 +2281,7 @@ initHysteriaConfig() {
 }
 EOF
 
-	addClientsHysteria "/etc/v2ray-agent/hysteria/conf/config.json" true
+	addClientsHysteria "/etc/v2RayVPN/hysteria/conf/config.json" true
 }
 
 # Initialize V2Ray configuration file
@@ -2304,31 +2304,31 @@ initV2RayConfig() {
 			uuid=${currentUUID}
 			addClientsStatus=true
 		else
-			uuid=$(/etc/v2ray-agent/v2ray/v2ctl uuid)
+			uuid=$(/etc/v2RayVPN/v2ray/v2ctl uuid)
 		fi
 	elif [[ -z "${uuid}" ]]; then
-		uuid=$(/etc/v2ray-agent/v2ray/v2ctl uuid)
+		uuid=$(/etc/v2RayVPN/v2ray/v2ctl uuid)
 	fi
 
 	if [[ -z "${uuid}" ]]; then
 		addClientsStatus=
 		echoContent red "\n ---> uuid read error, regenerate"
-		uuid=$(/etc/v2ray-agent/v2ray/v2ctl uuid)
+		uuid=$(/etc/v2RayVPN/v2ray/v2ctl uuid)
 	fi
 
 	movePreviousConfig
 	# log
-	cat <<EOF >/etc/v2ray-agent/v2ray/conf/00_log.json
+	cat <<EOF >/etc/v2RayVPN/v2ray/conf/00_log.json
 {
   "log": {
-    "error": "/etc/v2ray-agent/v2ray/error.log",
+    "error": "/etc/v2RayVPN/v2ray/error.log",
     "loglevel": "warning"
   }
 }
 EOF
 	# outbounds
 	if [[ -n "${pingIPv6}" ]]; then
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/10_ipv6_outbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/10_ipv6_outbounds.json
 {
     "outbounds": [
         {
@@ -2341,7 +2341,7 @@ EOF
 EOF
 
 	else
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/10_ipv4_outbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/10_ipv4_outbounds.json
 {
     "outbounds":[
         {
@@ -2368,7 +2368,7 @@ EOF
 	fi
 
 	# dns
-	cat <<EOF >/etc/v2ray-agent/v2ray/conf/11_dns.json
+	cat <<EOF >/etc/v2RayVPN/v2ray/conf/11_dns.json
 {
     "dns": {
         "servers": [
@@ -2388,7 +2388,7 @@ EOF
 		fallbacksList='{"dest":31296,"xver":1},{"alpn":"h2","dest":31302,"xver":0}'
 
 		getClients "${configPath}../tmp/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/04_trojan_TCP_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/04_trojan_TCP_inbounds.json
 {
 "inbounds":[
 	{
@@ -2418,14 +2418,14 @@ EOF
 	]
 }
 EOF
-		addClients "/etc/v2ray-agent/v2ray/conf/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/v2ray/conf/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VLESS_WS_TLS
 	if echo "${selectCustomInstallType}" | grep -q 1 || [[ "$1" == "all" ]]; then
 		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'ws","dest":31297,"xver":1}'
 		getClients "${configPath}../tmp/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/03_VLESS_WS_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/03_VLESS_WS_inbounds.json
 {
 "inbounds":[
     {
@@ -2454,7 +2454,7 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/v2ray/conf/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/v2ray/conf/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# trojan_grpc
@@ -2463,7 +2463,7 @@ EOF
 			fallbacksList=${fallbacksList//31302/31304}
 		fi
 		getClients "${configPath}../tmp/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/04_trojan_gRPC_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/04_trojan_gRPC_inbounds.json
 {
     "inbounds": [
         {
@@ -2494,7 +2494,7 @@ EOF
     ]
 }
 EOF
-		addClients "/etc/v2ray-agent/v2ray/conf/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/v2ray/conf/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VMess_WS
@@ -2503,7 +2503,7 @@ EOF
 
 		getClients "${configPath}../tmp/05_VMess_WS_inbounds.json" "${addClientsStatus}"
 
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/05_VMess_WS_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/05_VMess_WS_inbounds.json
 {
 "inbounds":[
 {
@@ -2533,12 +2533,12 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/v2ray/conf/05_VMess_WS_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/v2ray/conf/05_VMess_WS_inbounds.json" "${addClientsStatus}"
 	fi
 
 	if echo "${selectCustomInstallType}" | grep -q 5 || [[ "$1" == "all" ]]; then
 		getClients "${configPath}../tmp/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/v2ray/conf/06_VLESS_gRPC_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/v2ray/conf/06_VLESS_gRPC_inbounds.json
 {
     "inbounds":[
     {
@@ -2566,7 +2566,7 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/v2ray/conf/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/v2ray/conf/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VLESS_TCP
@@ -2576,7 +2576,7 @@ EOF
 		defaultPort=${customPort}
 	fi
 
-	cat <<EOF >/etc/v2ray-agent/v2ray/conf/02_VLESS_TCP_inbounds.json
+	cat <<EOF >/etc/v2RayVPN/v2ray/conf/02_VLESS_TCP_inbounds.json
 {
 "inbounds":[
 {
@@ -2607,8 +2607,8 @@ EOF
       ],
       "certificates": [
         {
-          "certificateFile": "/etc/v2ray-agent/tls/${domain}.crt",
-          "keyFile": "/etc/v2ray-agent/tls/${domain}.key",
+          "certificateFile": "/etc/v2RayVPN/tls/${domain}.crt",
+          "keyFile": "/etc/v2RayVPN/tls/${domain}.key",
           "ocspStapling": 3600,
           "usage":"encipherment"
         }
@@ -2619,7 +2619,7 @@ EOF
 ]
 }
 EOF
-	addClients "/etc/v2ray-agent/v2ray/conf/02_VLESS_TCP_inbounds.json" "${addClientsStatus}"
+	addClients "/etc/v2RayVPN/v2ray/conf/02_VLESS_TCP_inbounds.json" "${addClientsStatus}"
 
 }
 
@@ -2715,7 +2715,7 @@ initXrayConfig() {
 		if [[ -n ${customUUID} ]]; then
 			uuid=${customUUID}
 		else
-			uuid=$(/etc/v2ray-agent/xray/xray uuid)
+			uuid=$(/etc/v2RayVPN/xray/xray uuid)
 		fi
 
 	fi
@@ -2723,7 +2723,7 @@ initXrayConfig() {
 	if [[ -z "${uuid}" ]]; then
 		addClientsStatus=
 		echoContent red "\n ---> uuid read error, regenerate"
-		uuid=$(/etc/v2ray-agent/xray/xray uuid)
+		uuid=$(/etc/v2RayVPN/xray/xray uuid)
 	fi
 
 	echoContent yellow "\n ${uuid}"
@@ -2731,10 +2731,10 @@ initXrayConfig() {
 	movePreviousConfig
 
 	# log
-	cat <<EOF >/etc/v2ray-agent/xray/conf/00_log.json
+	cat <<EOF >/etc/v2RayVPN/xray/conf/00_log.json
 {
   "log": {
-    "error": "/etc/v2ray-agent/xray/error.log",
+    "error": "/etc/v2RayVPN/xray/error.log",
     "loglevel": "warning"
   }
 }
@@ -2742,7 +2742,7 @@ EOF
 
 	# outbounds
 	if [[ -n "${pingIPv6}" ]]; then
-		cat <<EOF >/etc/v2ray-agent/xray/conf/10_ipv6_outbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/10_ipv6_outbounds.json
 {
     "outbounds": [
         {
@@ -2755,7 +2755,7 @@ EOF
 EOF
 
 	else
-		cat <<EOF >/etc/v2ray-agent/xray/conf/10_ipv4_outbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/10_ipv4_outbounds.json
 {
     "outbounds":[
         {
@@ -2782,7 +2782,7 @@ EOF
 	fi
 
 	# dns
-	cat <<EOF >/etc/v2ray-agent/xray/conf/11_dns.json
+	cat <<EOF >/etc/v2RayVPN/xray/conf/11_dns.json
 {
     "dns": {
         "servers": [
@@ -2801,7 +2801,7 @@ EOF
 		fallbacksList='{"dest":31296,"xver":1},{"alpn":"h2","dest":31302,"xver":0}'
 		getClients "${configPath}../tmp/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
 
-		cat <<EOF >/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/04_trojan_TCP_inbounds.json
 {
 "inbounds":[
 	{
@@ -2831,14 +2831,14 @@ EOF
 	]
 }
 EOF
-		addClients "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/xray/conf/04_trojan_TCP_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VLESS_WS_TLS
 	if echo "${selectCustomInstallType}" | grep -q 1 || [[ "$1" == "all" ]]; then
 		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'ws","dest":31297,"xver":1}'
 		getClients "${configPath}../tmp/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/xray/conf/03_VLESS_WS_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/03_VLESS_WS_inbounds.json
 {
 "inbounds":[
     {
@@ -2867,7 +2867,7 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/xray/conf/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/xray/conf/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# trojan_grpc
@@ -2876,7 +2876,7 @@ EOF
 			fallbacksList=${fallbacksList//31302/31304}
 		fi
 		getClients "${configPath}../tmp/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/xray/conf/04_trojan_gRPC_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/04_trojan_gRPC_inbounds.json
 {
     "inbounds": [
         {
@@ -2907,14 +2907,14 @@ EOF
     ]
 }
 EOF
-		addClients "/etc/v2ray-agent/xray/conf/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/xray/conf/04_trojan_gRPC_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VMess_WS
 	if echo "${selectCustomInstallType}" | grep -q 3 || [[ "$1" == "all" ]]; then
 		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'vws","dest":31299,"xver":1}'
 		getClients "${configPath}../tmp/05_VMess_WS_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/05_VMess_WS_inbounds.json
 {
 "inbounds":[
 {
@@ -2944,12 +2944,12 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/xray/conf/05_VMess_WS_inbounds.json" "${addClientsStatus}"
 	fi
 
 	if echo "${selectCustomInstallType}" | grep -q 5 || [[ "$1" == "all" ]]; then
 		getClients "${configPath}../tmp/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
-		cat <<EOF >/etc/v2ray-agent/xray/conf/06_VLESS_gRPC_inbounds.json
+		cat <<EOF >/etc/v2RayVPN/xray/conf/06_VLESS_gRPC_inbounds.json
 {
     "inbounds":[
     {
@@ -2977,7 +2977,7 @@ EOF
 ]
 }
 EOF
-		addClients "/etc/v2ray-agent/xray/conf/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
+		addClients "/etc/v2RayVPN/xray/conf/06_VLESS_gRPC_inbounds.json" "${addClientsStatus}"
 	fi
 
 	# VLESS_TCP
@@ -2987,7 +2987,7 @@ EOF
 		defaultPort=${customPort}
 	fi
 
-	cat <<EOF >/etc/v2ray-agent/xray/conf/02_VLESS_TCP_inbounds.json
+	cat <<EOF >/etc/v2RayVPN/xray/conf/02_VLESS_TCP_inbounds.json
 {
 "inbounds":[
 {
@@ -3019,8 +3019,8 @@ EOF
       ],
       "certificates": [
         {
-          "certificateFile": "/etc/v2ray-agent/tls/${domain}.crt",
-          "keyFile": "/etc/v2ray-agent/tls/${domain}.key",
+          "certificateFile": "/etc/v2RayVPN/tls/${domain}.crt",
+          "keyFile": "/etc/v2RayVPN/tls/${domain}.key",
           "ocspStapling": 3600,
           "usage":"encipherment"
         }
@@ -3031,14 +3031,14 @@ EOF
 ]
 }
 EOF
-	addClients "/etc/v2ray-agent/xray/conf/02_VLESS_TCP_inbounds.json" "${addClientsStatus}"
+	addClients "/etc/v2RayVPN/xray/conf/02_VLESS_TCP_inbounds.json" "${addClientsStatus}"
 }
 
 # Initialize Trojan-Go configuration
 initTrojanGoConfig() {
 
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Initialize Trojan configuration"
-	cat <<EOF >/etc/v2ray-agent/trojan/config_full.json
+	cat <<EOF >/etc/v2RayVPN/trojan/config_full.json
 {
     "run_type": "server",
     "local_addr": "127.0.0.1",
@@ -3047,7 +3047,7 @@ initTrojanGoConfig() {
     "remote_port": 31300,
     "disable_http_check":true,
     "log_level":3,
-    "log_file":"/etc/v2ray-agent/trojan/trojan.log",
+    "log_file":"/etc/v2RayVPN/trojan/trojan.log",
     "password": [
         "${uuid}"
     ],
@@ -3118,7 +3118,7 @@ defaultBase64Code() {
 
 			echoContent yellow " ---> formatted plaintext (VLESS+TCP+TLS/xtls-rprx-direct)"
 			echoContent green "Protocol type: VLESS, address: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: xtls, transmission method: tcp, flow: xtls-rprx-direct, account name: ${email}\n"
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-direct#${email}
 EOF
 			echoContent yellow " ---> QR code VLESS(VLESS+TCP+TLS/xtls-rprx-direct)"
@@ -3131,7 +3131,7 @@ EOF
 
 			echoContent yellow " ---> formatted plaintext (VLESS+TCP+TLS/xtls-rprx-splice)"
 			echoContent green " Protocol type: VLESS, address: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: xtls, transmission method: tcp, flow: xtls-rprx-splice, account name: ${email/direct/splice}\n"
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-splice#${email/direct/splice}
 EOF
 			echoContent yellow " ---> QR code VLESS(VLESS+TCP+TLS/xtls-rprx-splice)"
@@ -3144,7 +3144,7 @@ EOF
 			echoContent yellow " ---> formatted plaintext (VLESS+TCP+TLS/xtls-rprx-splice)"
 			echoContent green " Protocol type: VLESS, address: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: tls, transmission method: tcp, account name: ${email/direct/splice} \n"
 
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vless://${id}@${currentHost}:${currentDefaultPort}?security=tls&encryption=none&host=${currentHost}&headerType=none&type=tcp#${email}
 EOF
 			echoContent yellow " ---> QR code VLESS(VLESS+TCP+TLS)"
@@ -3157,7 +3157,7 @@ EOF
 
 		echoContent yellow " ---> formatted plaintext (Trojan+TCP+TLS/xtls-rprx-direct)"
 		echoContent green "Protocol type: Trojan, address: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: xtls, transmission method: tcp, flow: xtls-rprx-direct, account name: ${email}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-direct#${email}
 EOF
 		echoContent yellow " ---> QR code Trojan(Trojan+TCP+TLS/xtls-rprx-direct)"
@@ -3170,7 +3170,7 @@ EOF
 
 		echoContent yellow " ---> formatted plaintext (Trojan+TCP+TLS/xtls-rprx-splice)"
 		echoContent green " Protocol type: VLESS, address: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: xtls, transmission method: tcp, flow: xtls-rprx-splice, account name: ${email/direct/splice}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-splice#${email/direct/splice}
 EOF
 		echoContent yellow " ---> QR code Trojan(Trojan+TCP+TLS/xtls-rprx-splice)"
@@ -3186,7 +3186,7 @@ EOF
 		echoContent green "    vmess://${qrCodeBase64Default}\n"
 		echoContent yellow " ---> QR code vmess(VMess+WS+TLS)"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vmess://${qrCodeBase64Default}
 EOF
 		echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vmess://${qrCodeBase64Default}\n"
@@ -3202,7 +3202,7 @@ EOF
 		# echoContent yellow " ---> Generic vmess(VMess+TCP+TLS) link"
 		#		echoContent green "    vmess://${qrCodeBase64Default}\n"
 		#
-		#		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		#		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 		#vmess://${qrCodeBase64Default}
 		#EOF
 		# echoContent yellow " ---> QR code vmess(VMess+TCP+TLS)"
@@ -3216,7 +3216,7 @@ EOF
 		echoContent yellow " ---> formatted plaintext (VLESS+WS+TLS)"
 		echoContent green " Protocol type: VLESS, address: ${currentAdd}, fake domain name/SNI: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: tls, transmission method: ws, path :/${currentPath}ws, account name: ${email}\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&path=/${currentPath}ws#${email}
 EOF
 
@@ -3231,7 +3231,7 @@ EOF
 		echoContent yellow " ---> formatted plaintext (VLESS+gRPC+TLS)"
 		echoContent green " Protocol type: VLESS, address: ${currentAdd}, fake domain name/SNI: ${currentHost}, port: ${currentDefaultPort}, user ID: ${id}, security: tls, transmission method: gRPC, alpn :h2, serviceName: ${currentPath}grpc, account name: ${email}\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=${currentHost}#${email}
 EOF
 		echoContent yellow " ---> QR code VLESS(VLESS+gRPC+TLS)"
@@ -3242,7 +3242,7 @@ EOF
 		echoContent yellow " ---> Trojan(TLS)"
 		echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=${currentHost}&alpn=http/1.1#${currentHost}_Trojan\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=${currentHost}&alpn=http/1.1#${email}_Trojan
 EOF
 		echoContent yellow " ---> QR code Trojan(TLS)"
@@ -3253,7 +3253,7 @@ EOF
 
 		echoContent yellow " ---> Trojan gRPC(TLS)"
 		echoContent green "    trojan://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#${email}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#${email}
 EOF
 		echoContent yellow " ---> QR code Trojan gRPC(TLS)"
@@ -3262,7 +3262,7 @@ EOF
 	elif [[ "${type}" == "hysteria" ]]; then
 		echoContent yellow " ---> Hysteria(TLS)"
 		echoContent green "    hysteria://${currentHost}:${hysteriaPort}?protocol=${hysteriaProtocol}&auth=${id}&peer=${currentHost}&insecure=0&alpn=h3&upmbps=${hysteriaClientUploadSpeed}&downmbps=${hysteriaClientDownloadSpeed}#${email}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2RayVPN/subscribe_tmp/${subAccount}"
 hysteria://${currentHost}:${hysteriaPort}?protocol=${hysteriaProtocol}&auth=${id}&peer=${currentHost}&insecure=0&alpn=h3&upmbps=${hysteriaClientUploadSpeed}&downmbps=${hysteriaClientDownloadSpeed}#${email}
 EOF
 		echoContent yellow " ---> QR code Hysteria(TLS)"
@@ -3446,14 +3446,14 @@ checkNginx302() {
 # Backup and restore nginx files
 backupNginxConfig() {
 	if [[ "$1" == "backup" ]]; then
-		cp /etc/nginx/conf.d/alone.conf /etc/v2ray-agent/alone_backup.conf
+		cp /etc/nginx/conf.d/alone.conf /etc/v2RayVPN/alone_backup.conf
 		echoContent green " ---> nginx configuration file backup successfully"
 	fi
 
-	if [[ "$1" == "restoreBackup" ]] && [[ -f "/etc/v2ray-agent/alone_backup.conf" ]]; then
-		cp /etc/v2ray-agent/alone_backup.conf /etc/nginx/conf.d/alone.conf
+	if [[ "$1" == "restoreBackup" ]] && [[ -f "/etc/v2RayVPN/alone_backup.conf" ]]; then
+		cp /etc/v2RayVPN/alone_backup.conf /etc/nginx/conf.d/alone.conf
 		echoContent green " ---> nginx configuration file restore and backup successfully"
-		rm /etc/v2ray-agent/alone_backup.conf
+		rm /etc/v2RayVPN/alone_backup.conf
 	fi
 
 }
@@ -3663,15 +3663,15 @@ unInstall() {
 	rm -rf /root/.acme.sh
 	echoContent green "---> delete acme.sh complete"
 
-	rm -rf /tmp/v2ray-agent-tls/*
-	if [[ -d "/etc/v2ray-agent/tls" ]] && [[ -n $(find /etc/v2ray-agent/tls/ -name "*.key") ]] && [[ -n $(find /etc/v2ray-agent/tls/ -name "*.crt") ]]; then
-		mv /etc/v2ray-agent/tls /tmp/v2ray-agent-tls
-		if [[ -n $(find /tmp/v2ray-agent-tls -name '*.key') ]]; then
-			echoContent yellow " ---> The backup certificate is successful, please keep it.[/tmp/v2ray-agent-tls]"
+	rm -rf /tmp/v2RayVPN-tls/*
+	if [[ -d "/etc/v2RayVPN/tls" ]] && [[ -n $(find /etc/v2RayVPN/tls/ -name "*.key") ]] && [[ -n $(find /etc/v2RayVPN/tls/ -name "*.crt") ]]; then
+		mv /etc/v2RayVPN/tls /tmp/v2RayVPN-tls
+		if [[ -n $(find /tmp/v2RayVPN-tls -name '*.key') ]]; then
+			echoContent yellow " ---> The backup certificate is successful, please keep it.[/tmp/v2RayVPN-tls]"
 		fi
 	fi
 
-	rm -rf /etc/v2ray-agent
+	rm -rf /etc/v2RayVPN
 	rm -rf ${nginxConfigPath}alone.conf
 
 	if [[ -d "/usr/share/nginx/html" && -f "/usr/share/nginx/html/check" ]]; then
@@ -3682,7 +3682,7 @@ unInstall() {
 	rm -rf /usr/bin/vasma
 	rm -rf /usr/sbin/vasma
 	echoContent green " ---> Uninstall shortcut completed"
-	echoContent green "---> Uninstall v2ray-agent script completed"
+	echoContent green "---> Uninstall v2RayVPN script completed"
 }
 
 #updateGeoSite
@@ -3764,12 +3764,12 @@ customUUID() {
 	else
 		jq -r -c '.inbounds[0].settings.clients[].id' ${configPath}${frontingType}.json | while read -r line; do
 			if [[ "${line}" == "${currentCustomUUID}" ]]; then
-				echo >/tmp/v2ray-agent
+				echo >/tmp/v2RayVPN
 			fi
 		done
-		if [[ -f "/tmp/v2ray-agent" && -n $(cat /tmp/v2ray-agent) ]]; then
+		if [[ -f "/tmp/v2RayVPN" && -n $(cat /tmp/v2RayVPN) ]]; then
 			echoContent red "---> UUID cannot be repeated"
-			rm /tmp/v2ray-agent
+			rm /tmp/v2RayVPN
 			exit 0
 		fi
 	fi
@@ -3790,12 +3790,12 @@ customUserEmail() {
 	else
 		jq -r -c '.inbounds[0].settings.clients[].email' ${configPath}${frontingType}.json | while read -r line; do
 			if [[ "${line}" == "${currentCustomEmail}" ]]; then
-				echo >/tmp/v2ray-agent
+				echo >/tmp/v2RayVPN
 			fi
 		done
-		if [[ -f "/tmp/v2ray-agent" && -n $(cat /tmp/v2ray-agent) ]]; then
+		if [[ -f "/tmp/v2RayVPN" && -n $(cat /tmp/v2RayVPN) ]]; then
 			echoContent red " ---> email cannot be repeated"
-			rm /tmp/v2ray-agent
+			rm /tmp/v2RayVPN
 			exit 0
 		fi
 	fi
@@ -3973,17 +3973,17 @@ removeUser() {
 }
 # Updated script
 updateV2RayAgent() {
-	echoContent skyBlue "\nProgress $1/${totalProgress} : Update v2ray-agent script"
-	rm -rf /etc/v2ray-agent/install.sh
+	echoContent skyBlue "\nProgress $1/${totalProgress} : Update v2RayVPN script"
+	rm -rf /etc/v2RayVPN/install.sh
 	if wget --help | grep -q show-progress; then
-		wget -c -q --show-progress -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/install.sh"
+		wget -c -q --show-progress -P /etc/v2RayVPN/ -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/install.sh"
 	else
-		wget -c -q -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/install.sh"
+		wget -c -q -P /etc/v2RayVPN/ -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/install.sh"
 	fi
 
-	sudo chmod 700 /etc/v2ray-agent/install.sh
+	sudo chmod 700 /etc/v2RayVPN/install.sh
 	local version
-	version=$(grep 'Current version:v' "/etc/v2ray-agent/install.sh" | awk -F "[v]" '{print $2}' | tail -n +2 | head -n 1 | awk -F "[\"]" '{print $1}')
+	version=$(grep 'Current version:v' "/etc/v2RayVPN/install.sh" | awk -F "[v]" '{print $2}' | tail -n +2 | head -n 1 | awk -F "[\"]" '{print $1}')
 
 	echoContent green "\n ---> Update completed"
 	echoContent yellow " ---> Please manually execute [vasma] to open the script"
@@ -4087,10 +4087,10 @@ EOF
 		tail -f ${configPathLog}error.log
 		;;
 	4)
-		tail -n 100 /etc/v2ray-agent/crontab_tls.log
+		tail -n 100 /etc/v2RayVPN/crontab_tls.log
 		;;
 	5)
-		tail -n 100 /etc/v2ray-agent/tls/acme.log
+		tail -n 100 /etc/v2RayVPN/tls/acme.log
 		;;
 	6)
 		echo >${configPathLog}access.log
@@ -4102,12 +4102,12 @@ EOF
 # Script shortcut
 aliasInstall() {
 
-	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:afandiazmi"; then
-		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
+	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2RayVPN" ]] && grep <"$HOME/install.sh" -q "作者:afandiazmi"; then
+		mv "$HOME/install.sh" /etc/v2RayVPN/install.sh
 		local vasmaType=
 		if [[ -d "/usr/bin/" ]]; then
 			if [[ ! -f "/usr/bin/vasma" ]]; then
-				ln -s /etc/v2ray-agent/install.sh /usr/bin/vasma
+				ln -s /etc/v2RayVPN/install.sh /usr/bin/vasma
 				chmod 700 /usr/bin/vasma
 				vasmaType=true
 			fi
@@ -4115,7 +4115,7 @@ aliasInstall() {
 			rm -rf "$HOME/install.sh"
 		elif [[ -d "/usr/sbin" ]]; then
 			if [[ ! -f "/usr/sbin/vasma" ]]; then
-				ln -s /etc/v2ray-agent/install.sh /usr/sbin/vasma
+				ln -s /etc/v2RayVPN/install.sh /usr/sbin/vasma
 				chmod 700 /usr/sbin/vasma
 				vasmaType=true
 			fi
@@ -5263,7 +5263,7 @@ unInstallHysteriaCore() {
 		exit 0
 	fi
 	handleHysteria stop
-	rm -rf /etc/v2ray-agent/hysteria/*
+	rm -rf /etc/v2RayVPN/hysteria/*
 	rm -rf /etc/systemd/system/hysteria.service
 	echoContent green " ---> Uninstallation completed"
 }
@@ -5325,18 +5325,18 @@ subscribe() {
 		echoContent skyBlue "-------------------------Note-------------------------"
 		echoContent yellow "# Subscriptions will be regenerated when viewing subscriptions"
 		echoContent yellow "# Every time you add or delete an account, you need to check the subscription again"
-		rm -rf /etc/v2ray-agent/subscribe/*
-		rm -rf /etc/v2ray-agent/subscribe_tmp/*
+		rm -rf /etc/v2RayVPN/subscribe/*
+		rm -rf /etc/v2RayVPN/subscribe_tmp/*
 		showAccounts >/dev/null
-		mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
+		mv /etc/v2RayVPN/subscribe_tmp/* /etc/v2RayVPN/subscribe/
 
-		if [[ -n $(ls /etc/v2ray-agent/subscribe/) ]]; then
-			find /etc/v2ray-agent/subscribe/* | while read -r email; do
+		if [[ -n $(ls /etc/v2RayVPN/subscribe/) ]]; then
+			find /etc/v2RayVPN/subscribe/* | while read -r email; do
 				email=$(echo "${email}" | awk -F "[b][e][/]" '{print $2}')
 
 				local base64Result
-				base64Result=$(base64 -w 0 "/etc/v2ray-agent/subscribe/${email}")
-				echo "${base64Result}" >"/etc/v2ray-agent/subscribe/${email}"
+				base64Result=$(base64 -w 0 "/etc/v2RayVPN/subscribe/${email}")
+				echo "${base64Result}" >"/etc/v2RayVPN/subscribe/${email}"
 				echoContent skyBlue "--------------------------------------------------------------"
 				echoContent yellow "email:${email}\n"
 				local currentDomain=${currentHost}
