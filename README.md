@@ -76,7 +76,7 @@ wget -P/root -N --no-check-certificate "https://raw.githubusercontent.com/afandi
 
 # example image
 
-<img src="hhttps://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/install/install.jpg" width=700>
+<img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/install/install.jpg" width=700>
 
 # licence
 
