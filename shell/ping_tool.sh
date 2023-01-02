@@ -7,20 +7,20 @@ yellow="\e[93m"
 magenta="\e[95m"
 cyan="\e[96m"
 none="\033[0m"
-# 联通 104.23.240.0-104.23.243.254
-# 北方联通 较快节点
+# Connect 104.23.240.0-104.23.243.254
+# Northern Unicom Faster node
 # 152ms--- 104.23.240.45 104.23.241.132 104.23.242.84 104.23.243.9
 
-# 移动 104.16.0.0-79.255 104.16.96.0-175.254 104.16.192.0-207.255
+# move 104.16.0.0-79.255 104.16.96.0-175.254 104.16.192.0-207.255
 ChinaUnicom=("104.23.240.0-104.23.243.254")
 ChinaMobile=("1.0.0.0-1.0.0.254" "1.1.1.0-1.1.1.254" "104.16.80.0-104.16.95.255" "104.16.175.255-104.16.191.255")
 hkDirect=("104.16.0.0-104.16.79.255" "104.16.96.0-104.16.175.254" "104.16.192.0-104.16.207.255")
 
 
-# 测试延迟
+# Test delay
 testPing(){
-echo "\n"${skyBlue}第$5次检测中....${none}${red}请等待${none}"\n"
-# 计算ip段
+echo "\n"${skyBlue}First$5 tests....${none}${red}Please wait${none}"\n"
+# Calculate IP section
 ip11=`echo $1|awk '{print $1}'`
 ip12=`echo $1|awk '{print $2}'`
 ip21=`echo $2|awk '{print $1}'`
@@ -53,7 +53,7 @@ do
         done
     done
 done
-echo ${skyBlue}"请等待"${none}
+echo ${skyBlue}"Please wait"${none}
 min="1.1.1.1 1000 ms"
 indexLength=${#ipArr[@]}
 index=0
@@ -69,16 +69,16 @@ do
             min="${ipArr[$index]}"
         fi
     else
-        echo '异常数据'
+        echo 'abnormal data'
     fi
     let "index++"
 done
-echo "${skyBlue}\n一共检测到${indexLength}个ip,第$5段ip区间最优ip为：${none}"${green}$min${none}
+echo "${skyBlue}\n detected a total of $ {indexlength} a IP, No. 1$The optimal IP of the 5 -stage IP interval is:${none}"${green}$min${none}
 }
 manageFun(){
     case $1 in
         1)
-            echo ${skyBlue}"要检测的ip段为：104.23.240.0-104.23.243.254"${none}
+            echo ${skyBlue}"The IP segment to be detected is: 104.23.240.0-104.23.243.254"${none}
             ipList=()
             for ((i=0;i<${#ChinaUnicom[*]};i++))
             do
@@ -100,7 +100,7 @@ manageFun(){
             done
         ;;
         2)
-            echo ${skyBlue}"要检测的ip段为：1.0.0.0-1.0.0.254，1.1.1.0-1.1.1.254，104.16.80.0-104.16.95.255，104.16.175.255-104.16.191.255"${none}
+            echo ${skyBlue}"The IP segment to be detected is: 1.0.0.0-1.0.0.254，1.1.1.0-1.1.1.254，104.16.80.0-104.16.95.255，104.16.175.255-104.16.191.255"${none}
             for ((i=0;i<${#ChinaMobile[*]};i++))
             do
                 ip01=`echo ${ChinaMobile[$i]}|awk -F "[-]" '{print $1}'`
@@ -120,7 +120,7 @@ manageFun(){
             done
         ;;
         3)
-            echo ${skyBlue}"要检测的ip段为：104.16.0.0-104.16.79.255，104.16.96.0-104.16.175.254，104.16.192.0-104.16.207.255"${none}
+            echo ${skyBlue}"The IP segment to be detected is: 104.16.0.0-104.16.79.255，104.16.96.0-104.16.175.254，104.16.192.0-104.16.207.255"${none}
             for ((i=0;i<${#hkDirect[*]};i++))
             do
                 ip01=`echo ${hkDirect[$i]}|awk -F "[-]" '{print $1}'`
@@ -142,13 +142,13 @@ manageFun(){
     esac
 }
 start(){
-    echo "${purple}测试指定ip段，cloudflare的ip延迟${none}"
+    echo "${purple}Test the specified IP segment, Cloudflare's IP delay${none}"
     echo "${purple}===============================${none}"
-    echo "${green}  1.联通${none}"
-    echo "${green}  2.移动${none}"
-    echo "${green}  3.hk直连【适合移动以及服务器在hk的情况】${none}"
+    echo "${green}  1.Connect${none}"
+    echo "${green}  2.move${none}"
+    echo "${green}  3.HK direct connection [suitable for mobile and server in HK]${none}"
     echo "${purple}===============================${none}"
-    echo "${skyBlue}请选择【数字编号】:${none}"
+    echo "${skyBlue}Please select [Digital Number]:${none}"
     read -e funType
     manageFun $funType
 }

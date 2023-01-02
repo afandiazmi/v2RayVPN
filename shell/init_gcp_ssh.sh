@@ -2,7 +2,7 @@
 # bash <(curl -L -s https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/shell/init_gcp_ssh.sh)
 if [[ -z `find ~/.ssh -name authorized_keys` ]]
 then
-    echo -e "\033[36m 初始化 authorized_keys \033[0m"
+    echo -e "\033[36m initialization authorized_keys \033[0m"
     mkdir -p ~/.ssh
     touch ~/.ssh/authorized_keys
     chmod 600 ~/.ssh/authorized_keys

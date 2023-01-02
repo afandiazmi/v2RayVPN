@@ -4,22 +4,22 @@ removeType='yum -y remove'
 upgrade="yum -y update"
 echoType='echo -e'
 cp=`which cp`
-# 打印
+# Print
 echoColor(){
     case $1 in
-        # 红色
+        # red
         "red")
             ${echoType} "\033[31m$2 \033[0m"
         ;;
-        # 天蓝色
+        # sky blue
         "skyBlue")
             ${echoType} "\033[36m$2 \033[0m"
         ;;
-        # 绿色
+        # green
         "green")
             ${echoType} "\033[32m$2 \033[0m"
         ;;
-        # 白色
+        # White
         "white")
             ${echoType} "\033[37m$2 \033[0m"
         ;;
@@ -29,13 +29,13 @@ echoColor(){
         "skyBlue")
             ${echoType} "\033[36m$2 \033[0m"
         ;;
-        # 黄色
+        # yellow
         "yellow")
             ${echoType} "\033[33m$2 \033[0m"
         ;;
     esac
 }
-# 选择系统执行工具
+# Select the system execution tool
 checkSystem(){
 
 	if [[ ! -z `find /etc -name "redhat-release"` ]] || [[ ! -z `cat /proc/version | grep -i "centos" | grep -v grep ` ]] || [[ ! -z `cat /proc/version | grep -i "red hat" | grep -v grep ` ]] || [[ ! -z `cat /proc/version | grep -i "redhat" | grep -v grep ` ]]
@@ -59,65 +59,65 @@ checkSystem(){
     fi
     if [[ -z ${release} ]]
     then
-        echoContent red "本脚本不支持此系统，请将下方日志反馈给开发者"
+        echoContent red "This script does not support this system, please give feedback to the developer below"
         cat /etc/issue
         cat /proc/version
         exit 0;
     fi
 }
-# 安装工具包
+# Installation tool package
 installTools(){
-    echoColor yellow "更新"
+    echoColor yellow "renew"
     ${upgrade}
     if [[ -z `find /usr/bin/ -executable -name "socat"` ]]
     then
-        echoColor yellow "\nsocat未安装，安装中\n"
+        echoColor yellow "\nsocatNot Installed，installing\n"
         ${installType} socat >/dev/null
-        echoColor green "socat安装完毕"
+        echoColor green "SOCAT installation is complete"
     fi
-    echoColor yellow "\n检测是否安装Nginx"
+    echoColor yellow "\n to detect whether nginx is installed"
     if [[ -z `find /sbin/ -executable -name 'nginx'` ]]
     then
-        echoColor yellow "nginx未安装，安装中\n"
+        echoColor yellow "Nginx is not installed, installed in installation\n"
         ${installType} nginx >/dev/null
-        echoColor green "nginx安装完毕"
+        echoColor green "nginx is installed"
     else
-        echoColor green "nginx已安装\n"
+        echoColor green "Nginx has been installed\n"
     fi
-    echoColor yellow "检测是否安装acme.sh"
+    echoColor yellow "Detect whether to install ACME.sh"
     if [[ -z `find ~/.acme.sh/ -name "acme.sh"` ]]
     then
-        echoColor yellow "\nacme.sh未安装，安装中\n"
+        echoColor yellow "\nacme.shNot Installed，installing\n"
         curl -s https://get.acme.sh | sh >/dev/null
-        echoColor green "acme.sh安装完毕\n"
+        echoColor green "acme.sh installation\n"
     else
-        echoColor green "acme.sh已安装\n"
+        echoColor green "acme.sh has been installed\n"
     fi
 
 }
-# 恢复配置
+# Recovery configuration
 resetNginxConfig(){
     `cp -Rrf /tmp/afandiazmi/nginx/nginx.conf /etc/nginx/nginx.conf`
     rm -rf /etc/nginx/conf.d/5NX2O9XQKP.conf
-    echoColor green "\n恢复配置完毕"
+    echoColor green "\n recovery configuration is complete"
 }
-# 备份
+# Backup
 bakConfig(){
     mkdir -p /tmp/afandiazmi/nginx
     `cp -Rrf /etc/nginx/nginx.conf /tmp/afandiazmi/nginx/nginx.conf`
 }
-# 安装证书
+# Installation certificate
 installTLS(){
-    echoColor yellow "请输入域名【例:blog.v2RayVPN.com】："
+    echoColor yellow "Please enter the domain name [Example:blog.v2RayVPN.com】："
     read domain
     if [[ -z ${domain} ]]
     then
-        echoColor red "域名未填写\n"
+        echoColor red "Domain name is not filled in\n"
         installTLS
     fi
-    # 备份
+    # Backup
     bakConfig
-    # 替换原始文件中的域名
+    # Replace the domain name in the original file
     if [[ ! -z `cat /etc/nginx/nginx.conf|grep -v grep|grep "${domain}"` ]]
     then
         sed -i "s/${domain}/X655Y0M9UM9/g"  `grep "${domain}" -rl /etc/nginx/nginx.conf`
@@ -135,15 +135,15 @@ installTLS(){
     else
         nginx
     fi
-    echoColor yellow "\n验证域名以及服务器是否可用"
+    echoColor yellow "\nVerify the domain name and server is available"
     if [[ ! -z `curl -s ${domain}/test|grep 5NX2O9XQKP` ]]
     then
         ps -ef|grep -v grep|grep nginx|awk '{print $2}'|xargs kill -9
         sleep 0.5
-        echoColor green "服务可用，生成TLS中，请等待\n"
+        echoColor green "Service available, generate in TLS, please wait\n"
     else
-        echoColor red "服务不可用请检测dns配置是否正确"
-        # 恢复备份
+        echoColor red "If the service is not available, please detect whether the DNS configuration is correct"
+        # Restore backup
         resetNginxConfig
         exit 0;
     fi
@@ -151,16 +151,16 @@ installTLS(){
     ~/.acme.sh/acme.sh --installcert -d ${domain} --fullchainpath /tmp/afandiazmi/nginx/${domain}.crt --keypath /tmp/afandiazmi/nginx/${domain}.key --ecc >/dev/null
     if [[ -z `cat /tmp/afandiazmi/nginx/${domain}.key` ]]
     then
-        echoColor red "证书key生成失败，请重新运行"
+        echoColor red "Certificate Key failed, please reorganize"
         resetNginxConfig
         exit
     elif [[ -z `cat /tmp/afandiazmi/nginx/${domain}.crt` ]]
     then
-        echoColor red "证书crt生成失败，请重新运行"
+        echoColor red "Certificate CRT generating failure, please reorganize "
         resetNginxConfig
         exit
     fi
-    echoColor green "证书生成成功"
+    echoColor green "Successful certificate"
     echoColor green "证书目录/tmp/afandiazmi/nginx"
     ls /tmp/afandiazmi/nginx
 
@@ -173,28 +173,27 @@ installTLS(){
 
 init(){
     echoColor red "\n=============================="
-    echoColor yellow "此脚本注意事项"
-    echoColor green "   1.会安装依赖所需依赖"
-    echoColor green "   2.会把Nginx配置文件备份"
-    echoColor green "   3.会安装Nginx、acme.sh，如果已安装则使用已经存在的"
-    echoColor green "   4.安装完毕或者安装失败会自动恢复备份，请不要手动关闭脚本"
-    echoColor green "   5.执行期间请不要重启机器"
-    echoColor green "   6.备份文件和证书文件都在/tmp下面，请注意留存"
-    echoColor green "   7.如果多次执行则将上次生成备份和生成的证书强制覆盖"
-    echoColor green "   8.证书默认ec-256"
-    echoColor green "   9.下个版本会加入通配符证书生成[todo]"
-    echoColor green "   10.可以生成多个不同域名的证书[包含子域名]，具体速率请查看[https://letsencrypt.org/zh-cn/docs/rate-limits/]"
-    echoColor green "   11.兼容Centos、Ubuntu、Debian"
+Echocolor YELLOW "Precautions for this script"
+    Echocolor Green "1. Will install dependencies and dependencies"
+    Echocolor Green "2. Backing nginx configuration files"
+    Echocolor Green "3. Will install nginx and acme.sh. If it is installed, use the existing existence"
+    Echocolor Green "4. After installation or failure, it will automatically restore backup, please do not turn off the script manually"
+    echocolor Green "5. Please do not restart the machine during execution"
+    Echocolor Green "6. Backup files and certificates files are under/TMP, please pay attention to retain"
+    Echocolor Green "7. If it is executed multiple times, it will be forced to cover the backup and generated certificate of the last time"
+    Echocolor Green "8. Certificate default EC-256"
+    echocolor Green "9. The next version will be added with a formal symbol certificate to generate [TODO]"
+    Echocolor Green "10. You can generate a certificate of multiple different domain names [including sub-domain name], please check [https://letsencrypt.org/zh-cn/docs/raate-limits/]"
+    Echocolor Green "11. Compatible with CentOS, Ubuntu, Debian"
     echoColor green "   12.Github[https://github.com/afandiazmi]"
     echoColor red "=============================="
-    echoColor yellow "请输入[y]执行脚本，[任意]结束:"
-    read isExecStatus
+Echocolor yellow "Please enter the [y] execution script, [arbitrary] end:"    read isExecStatus
     if [[ ${isExecStatus} = "y" ]]
     then
         installTools
         installTLS
     else
-        echoColor green "欢迎下次使用"
+        echoColor green "Welcome to use next time"
         exit
     fi
 }

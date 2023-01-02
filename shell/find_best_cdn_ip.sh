@@ -8,36 +8,36 @@ function onCtrlC () {
     statisticalContent
     exit;
 }
-# 计算
+# calculate
 statisticalContent(){
     if [[ ! -z `ls /tmp|grep -v grep|grep ping.log` ]]
     then
         echoContent red "============================================="
-        echoContent yellow '计算中--->'
-        # 排序计算
-        echoContent red "排序规则：丢包率>波动>平均延迟，只展示最优的三十条"
-        echoContent red "依次展示为:[ ip 丢包率 最小延迟 平均延迟 最大延迟 波动 ]"
+        echoContent yellow 'Calculate--->'
+        # Sort calculation
+        echoContent red "Sorting Rules: Package Return rate> Volatility> Average delay, only show the best of the best"
+        echocontent red "shows: [The minimum delay of the IP packet loss rate average delay maximum delay volatility]"
         cat /tmp/ping.log|sort -t ' ' -k 2n -k 6n -k 4n|head -30
         echoContent red "============================================="
     fi
 
 }
-# echo工具类
+# Echo tool class
 echoContent(){
     case $1 in
-        # 红色
+        # red
         "red")
             ${echoType} "\033[31m$2 \033[0m"
         ;;
-        # 天蓝色
+        # sky blue
         "skyBlue")
             ${echoType} "\033[36m$2 \033[0m"
         ;;
-        # 绿色
+        # green
         "green")
             ${echoType} "\033[32m$2 \033[0m"
         ;;
-        # 白色
+        # White
         "white")
             ${echoType} "\033[37m$2 \033[0m"
         ;;
@@ -47,27 +47,27 @@ echoContent(){
         "skyBlue")
             ${echoType} "\033[36m$2 \033[0m"
         ;;
-        # 黄色
+        # yellow
         "yellow")
             ${echoType} "\033[33m$2 \033[0m"
         ;;
     esac
 }
-# 测试
+# test
 pingTool(){
     echo ''>/tmp/ping.log
     echoContent red "============================================="
-    echoContent green "默认测试为五次，超时为1000ms"
+    echoContent green "The default test is five times, and the timeout is 1000ms ""
     echoContent red "============================================="
-    read -p "请输入单个ip测试次数【默认为5次】：" testNum
+    read -p "Please enter a single IP test number [default 5 times】：" testNum
     if [[ "$testNum" =~ ^[0-9]+$ ]]
     then
         num=${testNum}
     else
-        echoContent red '使用默认'
+        echoContent red 'Use the default'
     fi
-    echoContent yellow "一共${#ip[*]}个IP，每个ip测试${num}次,大约耗时`expr ${#ip[*]} \* ${num} / 60`分钟"
-    echoContent yellow "可以中途Ctrl+c，这样只会计算、统计已经记录下来的"
+    echoContent yellow "一common${#ip[*]}This IP, Test $ {num} per IP, takes about time -consuming`expr ${#ip[*]} \* ${num} / 60`分钟"
+    echoContent yellow "You can ctrl+c midway, so that only the calculation and statistics have been recorded"
     for ((i=0;i<${#ip[*]};i++))
     do
         if [[ -z ${ip[$i]} ]]
@@ -86,49 +86,49 @@ pingTool(){
         ## |awk -F "[/]" '{print $1$2$3}'|awk -F "[.]" '{print $1" "$3" "$5" "$7}'
         if [[ -z ${roundTrip} ]]
         then
-            roundTrip="无"
+            roundTrip="none"
         fi
-        echo "ip:${ip[$i]},丢包率:${packetLoss}%,最小/平均/最大/波动:${roundTrip}"
+        echo "ip:${ip[$i]},Packet loss rate:${packetLoss}%,Minimum/average/maximum/fluctuation:${roundTrip}"
         echo "${ip[$i]} ${packetLoss} ${roundTrip}" >> /tmp/ping.log
     done
     statisticalContent
 }
-# 查找国家和地区
+# Find the country and region
 findCountry(){
     if [[ -z  `ls /tmp|grep -v grep|grep ips` ]]
     then
-        echoContent red "缺少ip库，请联系作者。"
+        echoContent red "Lack of IP library, please contact the author。"
         exit 0;
     fi
     echoContent red "============================================="
     cat /tmp/ips|awk -F "[|]" '{print $1}'|awk  -F "[-]" '{print $3}'|uniq|awk '{print NR":"$0}'
     echoContent red "============================================="
-    read -p "输入上述数字：" selectType
+    read -p "Enter the above numbers: " selectType
     if [[ -z `cat /tmp/ips|awk -F "[|]" '{print $1}'|awk  -F "[-]" '{print $3}'|uniq|awk '{print NR":"$0}'|grep -v grep|grep ${selectType}` ]]
     then
-        echoContent red '输入有误，请重新输入'
+        echoContent red 'Input is wrong, please re -enter'
         findCountry
     fi
     findIPList ${selectType}
 }
-# 查找ip
+# Find IP
 findIPList(){
     country=`cat /tmp/ips|awk -F "[|]" '{print $1}'|awk  -F "[-]" '{print $3}'|uniq|awk '{print NR":"$0}'|grep -v grep|grep ${selectType}|sort -t ':' -k 1n|head -1|awk -F "[:]" '{print $2}'`
     # cat /tmp/ips|awk -F "[|]" '{print $1}'|awk  -F "[-]" '{print $3}'|uniq|awk '{print NR":"$0}'|grep -v grep|grep 1|sort -t ':' -k 1n|head -1|awk -F "[:]" '{print $2}'
     echoContent red "============================================="
     cat /tmp/ips|grep -v grep|grep ${country}|awk -F "[|]" '{print $1}'|awk -F "[-]" '{print $1"-"$2}'|awk '{print "["NR"]"":"$0}'
-    read -p "请输入上述数字进行测试相应的ip段:" selectType
+    read -p "Please enter the above number to test the corresponding IP segment:" selectType
     if [[ -z ${selectType} ]]
     then
-        echoContent red '输入有误请重新输入！'
+        echoContent red 'Input is wrong, please re -enter！'
         findIPList $1
     fi
     echo ${country}
-    # cat /tmp/ips|grep -v grep|grep 中国移动|awk -F "[|]" '{print NR"-"$2}'|grep 174-|head -1 |awk -F "[|]" '{print $2}'
+    # cat /tmp/ips|grep -v grep|grep China Mobile|awk -F "[|]" '{print NR"-"$2}'|grep 174-|head -1 |awk -F "[|]" '{print $2}'
     eval $(cat /tmp/ips|grep -v grep|grep ${country}|awk -F "[|]" '{print NR"-"$2}'|grep ${selectType}-|head -1|awk -F "[-]" '{print $2}'|awk '{split($0,serverNameList," ");for(i in serverNameList) print "ip["i"]="serverNameList[i]}')
     pingTool
 }
-# 检查系统
+# Inspection system
 checkSystem(){
     if [[ "`uname`" = "Darwin" ]]
 	then
@@ -145,7 +145,7 @@ checkSystem(){
     fi
     if [[ -z ${release} ]]
     then
-        echoContent red "本脚本不支持此系统，请将下方日志反馈给开发者"
+        echoContent red "This script does not support this system, please give feedback to the developer below"
         cat /etc/issue
         cat /proc/version
         killSleep > /dev/null 2>&1
@@ -156,9 +156,9 @@ checkSystem(){
 downloadIPs(){
     if [[ -z `ls /tmp|grep -v grep|grep ips` ]]
     then
-        echoContent yellow '开始下载ip库'
+        echoContent yellow 'Start downloading IP library'
         wget -q -P /tmp/ https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/ips/ips
-        echoContent yellow '下载结束'
+        echoContent yellow 'Ending'
     fi
 }
 downloadIPs
