@@ -1161,11 +1161,11 @@ customSSLEmail() {
 # select ssl installation type
 switchSSLType() {
 	if [[ -z "${sslType}" ]]; then
-		echoContent red "\n=============================================================="
+		echoContent red "\n======================================================================================"
 		echoContent yellow "1.letsencrypt[default]"
 		echoContent yellow "2.zerossl"
 		echoContent yellow "3.buypass[DNS request not supported]"
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		read -r -p "Please select [Enter] to use default:" selectSSLType
 		case ${selectSSLType} in
 		1)
@@ -1686,13 +1686,13 @@ v2rayVersionManageMenu() {
 		menu
 		exit 0
 	fi
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Upgrade v2ray-core"
 	echoContent yellow "2.Fallback v2ray-core"
 	echoContent yellow "3.Close v2ray-core"
 	echoContent yellow "4.Open v2ray-core"
 	echoContent yellow "5.Restart v2ray-core"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectV2RayType
 	if [[ "${selectV2RayType}" == "1" ]]; then
 		updateV2Ray
@@ -1729,14 +1729,14 @@ xrayVersionManageMenu() {
 		menu
 		exit 0
 	fi
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Upgrade Xray-core"
 	echoContent yellow "2.Upgrade Xray-core preview version"
 	echoContent yellow "3.Fallback Xray-core"
 	echoContent yellow "4.Close Xray-core"
 	echoContent yellow "5.Open Xray-core"
 	echoContent yellow "6.Restart Xray-core"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectXrayType
 	if [[ "${selectXrayType}" == "1" ]]; then
 		updateXray
@@ -2195,11 +2195,11 @@ initHysteriaPort() {
 # Initialize the protocol of hysteria
 initHysteriaProtocol() {
 	echoContent skyBlue "\nPlease select a protocol type"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	echoContent yellow "1.udp(QUIC) (default)"
 	echoContent yellow "2.faketcp"
 	echoContent yellow "3.wechat-video"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectHysteriaProtocol
 	case ${selectHysteriaProtocol} in
 	1)
@@ -2642,14 +2642,14 @@ initXrayFrontingConfig() {
 	fi
 
 	echoContent skyBlue "\nFunction 1/${totalProgress} : switch to ${xtlsType}"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes\n"
 	echoContent yellow "replaces the prefix with ${xtlsType}"
 	echoContent yellow "If the prefix is ​​Trojan, when viewing the account, there will be two nodes of the Trojan protocol, one of which is unavailable xtls"
 	echoContent yellow "Execute again to switch to the previous preamble\n"
 
 	echoContent yellow "1.Switch to ${xtlsType}"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectType
 	if [[ "${selectType}" == "1" ]]; then
 
@@ -3074,7 +3074,7 @@ EOF
 # Custom CDN IP
 customCDNIP() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : add cloudflare custom CNAME"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes"
 	echoContent yellow "\nTutorial address:"
 	echoContent skyBlue "https://github.com/afandiazmi/v2RayVPN/blob/main/documents/optimize_V2Ray.md"
@@ -3480,7 +3480,7 @@ addNginx302() {
 # Update camouflage station
 updateNginxBlog() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Change fake site"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	echoContent yellow "# For customization, please manually copy the template file to /usr/share/nginx/html \n"
 	echoContent yellow "1.Novice guide"
 	echoContent yellow "2.Game website"
@@ -3492,16 +3492,16 @@ updateNginxBlog() {
 	echoContent yellow "8.Personal blog 02"
 	echoContent yellow "9.404 Automatically jump to baidu"
 	echoContent yellow "10.302 redirect site"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectInstallNginxBlogType
 
 	if [[ "${selectInstallNginxBlogType}" == "10" ]]; then
-		echoContent red "\n=============================================================="
+		echoContent red "\n======================================================================================"
 		echoContent yellow "The priority of redirection is higher.If you change the fake site after configuring 302, the fake site under the root route will not work"
 		echoContent yellow "If you want to disguise the site to achieve the effect, you need to delete the 302 redirect configuration\n"
 		echoContent yellow "1.Add"
 		echoContent yellow "2.Delete"
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		read -r -p "Please select:" redirectStatus
 
 		if [[ "${redirectStatus}" == "1" ]]; then
@@ -3545,7 +3545,7 @@ updateNginxBlog() {
 # add new port
 addCorePort() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : add new port"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes\n"
 	echoContent yellow "Support batch add"
 	echoContent yellow "does not affect the use of the default port"
@@ -3555,7 +3555,7 @@ addCorePort() {
 
 	echoContent yellow "1.Add port"
 	echoContent yellow "2.Delete port"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectNewPortType
 	if [[ "${selectNewPortType}" == "1" ]]; then
 		read -r -p "Please enter the port number:" newPort
@@ -3694,12 +3694,12 @@ updateV2RayCDN() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Modify CDN node"
 
 	if [[ -n "${currentAdd}" ]]; then
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		echoContent yellow "1.CNAME www.digitalocean.com"
 		echoContent yellow "2.CNAME www.cloudflare.com"
 		echoContent yellow "3.CNAME hostmonit.com"
 		echoContent yellow "4.Manual input"
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		read -r -p "Please select:" selectCDNType
 		case ${selectCDNType} in
 		1)
@@ -4012,11 +4012,11 @@ handleFirewall() {
 
 # install BBR
 bbrInstall() {
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent green "The mature works of [ylx2016] for BBR and DD scripts, the address is [https://github.com/ylx2016/Linux-NetSpeed], please be familiar with"
 	echoContent yellow "1.Installation script [recommended original BBR+FQ]"
 	echoContent yellow "2.Fallback home directory"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" installBBRStatus
 	if [[ "${installBBRStatus}" == "1" ]]; then
 		wget -N --no-check-certificate "https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
@@ -4036,7 +4036,7 @@ checkLog() {
 	fi
 
 	echoContent skyBlue "\nFunction $1/${totalProgress} : View log"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# It is recommended to open access log only when debugging\n"
 
 	if [[ "${logStatus}" == "false" ]]; then
@@ -4050,7 +4050,7 @@ checkLog() {
 	echoContent yellow "4.View the certificate timing task log"
 	echoContent yellow "5.View certificate installation log"
 	echoContent yellow "6.Clear the log"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 
 	read -r -p "Please select:" selectAccessLogType
 	local configPathLog=${configPath//conf\//}
@@ -4148,13 +4148,13 @@ ipv6Routing() {
 
 	checkIPv6
 	echoContent skyBlue "\nFunction 1/${totalProgress} : IPv6 offload"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Add domain name"
 	echoContent yellow "2.Uninstall IPv6 offload"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" ipv6Status
 	if [[ "${ipv6Status}" == "1" ]]; then
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		echoContent yellow "# Notes\n"
 		echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 		echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4224,7 +4224,7 @@ btTools() {
 	fi
 
 	echoContent skyBlue "\nFunction 1/${totalProgress} : bt download management"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 
 	if [[ -f ${configPath}09_routing.json ]] && grep -q bittorrent <${configPath}09_routing.json; then
 		echoContent yellow "Current Status: Disabled"
@@ -4234,7 +4234,7 @@ btTools() {
 
 	echoContent yellow "1.Disable"
 	echoContent yellow "2.Open"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" btStatus
 	if [[ "${btStatus}" == "1" ]]; then
 
@@ -4299,13 +4299,13 @@ blacklist() {
 	fi
 
 	echoContent skyBlue "\nProgress $1/${totalProgress} : domain name blacklist"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Add domain name"
 	echoContent yellow "2.Delete blacklist"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" blacklistStatus
 	if [[ "${blacklistStatus}" == "1" ]]; then
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		echoContent yellow "# Notes\n"
 		echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 		echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4425,7 +4425,7 @@ installSniffing() {
 # warp triage
 warpRouting() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : WARP diversion"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	# echoContent yellow "# Notes\n"
 	# echoContent yellow "1.There are bugs in the official warp after several rounds of testing.Restarting the warp will cause the warp to fail and fail to start, and the CPU usage may also skyrocket"
 	# echoContent yellow "2.The machine can be used normally without restarting the machine.If you have to use the official warp, it is recommended not to restart the machine"
@@ -4443,13 +4443,13 @@ warpRouting() {
 		fi
 	fi
 
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Add domain name"
 	echoContent yellow "2.Uninstall WARP offload"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" warpStatus
 	if [[ "${warpStatus}" == "1" ]]; then
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		echoContent yellow "# Notes\n"
 		echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 		echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4512,7 +4512,7 @@ EOF
 # Streaming Toolbox
 streamingToolbox() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : Streaming Toolbox"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	# echoContent yellow "1.Netflix detection"
 	echoContent yellow "1.Any door landing machine unlocks streaming media"
 	echoContent yellow "2.DNS unlock streaming"
@@ -4536,7 +4536,7 @@ streamingToolbox() {
 # Arbitrary door unlock streaming
 dokodemoDoorUnblockStreamingMedia() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : Unlock streaming media with any door landing machine"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes"
 	echoContent yellow "Any door unlock details, please check this article [https://github.com/afandiazmi/v2RayVPN/blob/main/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
@@ -4561,7 +4561,7 @@ dokodemoDoorUnblockStreamingMedia() {
 # VMess+WS+TLS to unlock streaming media [outbound only]
 unblockVMessWSTLSStreamingMedia() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : VMess+WS+TLS outbound unblock streaming"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes"
 	echoContent yellow "Suitable for unlocking services via VMess provided by other service providers\n"
 
@@ -4582,7 +4582,7 @@ unblockVMessWSTLSStreamingMedia() {
 # Set VMess+WS+TLS to unblock Netflix [outbound only]
 setVMessWSTLSUnblockStreamingMediaOutbounds() {
 	read -r -p "Please enter the address to unlock the streaming media VMess+WS+TLS:" setVMessWSTLSAddress
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	echoContent yellow "# Notes\n"
 	echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 	echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4661,7 +4661,7 @@ EOF
 # Set any door to unlock Netflix [outbound]
 setDokodemoDoorUnblockStreamingMediaOutbounds() {
 	read -r -p "Please enter the IP to unlock the streaming vps:" setIP
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	echoContent yellow "# Notes\n"
 	echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 	echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4734,7 +4734,7 @@ EOF
 setDokodemoDoorUnblockStreamingMediaInbounds() {
 
 	echoContent skyBlue "\nFunction 1/${totalProgress} : add inbound to any door"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Notes\n"
 	echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 	echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -4920,7 +4920,7 @@ dnsUnlockNetflix() {
 		exit 0
 	fi
 	echoContent skyBlue "\nFunction 1/${totalProgress} : DNS unblock streaming"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Add"
 	echoContent yellow "2.Uninstall"
 	read -r -p "Please select:" selectType
@@ -4939,7 +4939,7 @@ dnsUnlockNetflix() {
 setUnlockDNS() {
 	read -r -p "Please enter Unblock Streaming DNS:" setDNS
 	if [[ -n ${setDNS} ]]; then
-		echoContent red "=============================================================="
+		echoContent red "======================================================================================"
 		echoContent yellow "# Notes\n"
 		echoContent yellow "1.The rule only supports the predefined domain name list [https://github.com/v2fly/domain-list-community]"
 		echoContent yellow "2.Detailed documentation [https://www.v2fly.org/config/routing.html]"
@@ -5134,10 +5134,10 @@ customXrayInstall() {
 # Select core installation---v2ray-core, xray-core
 selectCoreInstall() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : select core installation"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "1.Xray-core"
 	echoContent yellow "2.v2ray-core"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" selectCoreType
 	case ${selectCoreType} in
 	1)
@@ -5297,14 +5297,14 @@ cronRenewTLS() {
 # Account management
 manageAccount() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : Account Management"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent yellow "# Every time you delete or add an account, you need to re-check the subscription to generate a subscription"
 	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria at the same time\n"
 	echoContent yellow "1.View account"
 	echoContent yellow "2.View subscription"
 	echoContent yellow "3.Add user"
 	echoContent yellow "4.Delete user"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please enter:" manageAccountStatus
 	if [[ "${manageAccountStatus}" == "1" ]]; then
 		showAccounts 1
@@ -5364,12 +5364,12 @@ switchAlpn() {
 		exit 0
 	fi
 
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent green "The current alpn first is: ${currentAlpn}"
 	echoContent yellow " 1.When http/1.1 is the first, trojan is available, and some gRPC clients are available [client supports manual selection of alpn available]"
 	echoContent yellow " 2.When h2 is the first, gRPC is available, and some trojan clients are available [clients support manual selection of alpn available]"
 	echoContent yellow " 3.If the client does not support manual replacement of alpn, it is recommended to use this function to change the order of alpn on the server to use the corresponding protocol"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 
 	if [[ "${currentAlpn}" == "http/1.1" ]]; then
 		echoContent yellow "1.Switch the first position of alpn h2"
@@ -5379,7 +5379,7 @@ switchAlpn() {
 		echoContent red 'incompatible'
 	fi
 
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 
 	read -r -p "Please select:" selectSwitchAlpnType
 	if [[ "${selectSwitchAlpnType}" == "1" && "${currentAlpn}" == "http/1.1" ]]; then
@@ -5403,7 +5403,7 @@ switchAlpn() {
 manageHysteria() {
 
 	echoContent skyBlue "\nProgress 1/1: Hysteria Management"
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	local hysteriaStatus=
 	if [[ -n "${hysteriaConfigPath}" ]]; then
 		echoContent yellow "1.Reinstall"
@@ -5415,7 +5415,7 @@ manageHysteria() {
 		echoContent yellow "1.Install"
 	fi
 
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	read -r -p "Please select:" installHysteriaStatus
 	if [[ "${installHysteriaStatus}" == "1" ]]; then
 		hysteriaCoreInstall
@@ -5431,7 +5431,7 @@ manageHysteria() {
 # main menu
 menu() {
 	cd "$HOME" || exit
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================="
 echoContent white	 "█████╗ ███████╗ █████╗ ███╗   ██╗██████╗ ██╗     █████╗ ███████╗███╗   ███╗██╗"
 echoContent white  "██╔══██╗██╔════╝██╔══██╗████╗  ██║██╔══██╗██║    ██╔══██╗╚══███╔╝████╗ ████║██║"
 echoContent white  "███████║█████╗  ███████║██╔██╗ ██║██║  ██║██║    ███████║  ███╔╝ ██╔████╔██║██║"
@@ -5444,11 +5444,11 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 	echoContent green "Description: 8-in-1 coexistence script\c"
 	showInstallStatus
 	echoContent " "
-	echoContent red "\n=============================================================="
+	echoContent red "\n======================================================================================"
 	echoContent red "Promotion Area"
 	echoContent white "Buy me a coffee: https://shopee.com.my/product/881840959/21359471308/\n"
 	
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	if [[ -n "${coreInstallType}" ]]; then
 		echoContent yellow "1.Reinstall"
 	else
@@ -5482,7 +5482,7 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 	echoContent skyBlue "-------------------------Script management--------------------"
 	echoContent yellow "19.View log"
 	echoContent yellow "20.Uninstall script"
-	echoContent red "=============================================================="
+	echoContent red "======================================================================================"
 	mkdirTools
 	aliasInstall
 	read -r -p "Please select:" selectInstallType
