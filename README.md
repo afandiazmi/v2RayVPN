@@ -68,10 +68,10 @@
 
 - supports shortcut startup, after installation, enter [**vasma**] in the shell You can open the script, the script execution path [**/etc/v2RayVPN/install.sh**]
 
-- Latest Version [recommended]
+- Latest Version Script[recommended]
 
 ```
-wget -P/root -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/shell/install_en.sh" && mv /root/install_en.sh /root/install.sh && chmod 700 /root/install.sh &&/root/install.sh
+wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/install.sh" && chmod 700 /root/install.sh && /root/install.sh
 ```
 
 # example image
