@@ -8,7 +8,7 @@
 
 # Catalog
 
-- [1.Script installation](#1vlesstcptlsvlesswstlsvmesstcptlsvmesswstlstrojan-camouflage site-five-in-one coexistence script)
+- [1.Script installation](VLESS+TCP+TLS/VLESS+TCP+XTLS/VLESS+gRPC+TLS/VLESS+WS+TLS/VMess+TCP+TLS/VMess+WS+TLS/Trojan+TCP+TLS/Trojan+gRPC+TLS/Trojan+TCP+XTLS -camouflage 8-in-1 coexistence script)
   - [Features](#Features)
   - [Notes](#Notes)
   - [Installation Script](#installation-script)
