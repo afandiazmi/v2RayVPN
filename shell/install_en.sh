@@ -5432,16 +5432,21 @@ manageHysteria() {
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
-	echoContent green "author:afandiazmi"
-	echoContent green "Current version: v2.6.10"
-	echoContent green "Github:https://github.com/afandiazmi/v2RayVPN"
-	echoContent green "Description: 8-in-1 coexistence script\c"
+echoContent white	 "█████╗ ███████╗ █████╗ ███╗   ██╗██████╗ ██╗     █████╗ ███████╗███╗   ███╗██╗"
+echoContent white  "██╔══██╗██╔════╝██╔══██╗████╗  ██║██╔══██╗██║    ██╔══██╗╚══███╔╝████╗ ████║██║"
+echoContent white  "███████║█████╗  ███████║██╔██╗ ██║██║  ██║██║    ███████║  ███╔╝ ██╔████╔██║██║"
+echoContent white  "██╔══██║██╔══╝  ██╔══██║██║╚██╗██║██║  ██║██║    ██╔══██║ ███╔╝  ██║╚██╔╝██║██║"
+echoContent white  "██║  ██║██║     ██║  ██║██║ ╚████║██████╔╝██║    ██║  ██║███████╗██║ ╚═╝ ██║██║"
+echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝    ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝"
+	echoContent white "author: afandiazmi"
+	echoContent white "Current version: v1.3.0"
+	echoContent white "Github:https://github.com/afandiazmi/v2RayVPN"
+	echoContent white "Description: 8-in-1 coexistence script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
 	echoContent red "Promotion Area"
-	echoContent green "AFF donation: https://github.com/afandiazmi/v2RayVPN/blob/main/documents/donation_aff.md\n"
-	echoContent green "Virtual currency donation: 0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
-	echoContent green "Contact TG for promotion: https://t.me/AfandiAzmi"
+	echoContent white "Buy me a coffee: https://shopee.com.my/product/881840959/21359471308/\n"
+	
 	echoContent red "=============================================================="
 	if [[ -n "${coreInstallType}" ]]; then
 		echoContent yellow "1.Reinstall"
