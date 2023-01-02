@@ -1,75 +1,75 @@
-- [1.准备工作](#1准备工作)
-- [2.购买流量转发服务](#2购买流量转发服务)
-- [3.配置流量转发服务](#3配置流量转发服务)
-  - [1.配置 idc.wiki 流量转发](#1配置idcwiki流量转发)
-- [4.修改客户端](#4修改客户端)
-  - [1.客户端示例](#1客户端示例)
-- [6.流量转发、计费方式](#6流量转发计费方式)
+- [1. Preparations] (#1 Preparations)
+- [2. Purchase Traffic Forwarding Service](#2 Purchase Traffic Forwarding Service)
+- [3. Configure traffic forwarding service] (#3 Configure traffic forwarding service)
+  - [1. Configure idc.wiki traffic forwarding](#1 configure idcwiki traffic forwarding)
+- [4.Modify Client](#4 Modify Client)
+  - [1.Client example](#1 client example)
+- [6. Traffic forwarding, billing method] (#6 traffic forwarding billing method)
 
-> 购买之前必看[流量计费规则](6流量转发计费方式)
+> You must read [Traffic Billing Rules] before buying (6 traffic forwarding billing methods)
 
-# 1.准备工作
+# 1. Preparation
 
-- 1.需要一台没被墙的 VPS（IPLC 可使用被墙的）。
-- 2.必须保证在不用流量转发服务的情况可以使用 XTLS/TLS+VLESS、Trojan，这里的 Trojan、XTLS/TLS+VLESS、websocket+tls 设置方法相同，下面是用 websocket+tls 示例。
+- 1. Need a VPS that is not blocked (IPLC can use a blocked VPS).
+- 2. It must be ensured that XTLS/TLS+VLESS and Trojan can be used without the traffic forwarding service. The setting methods of Trojan, XTLS/TLS+VLESS and websocket+tls here are the same. The following is an example of using websocket+tls.
 
-# 2.购买流量转发服务
+# 2. Purchase traffic forwarding service
 
-# 3.配置流量转发服务
+# 3. Configure traffic forwarding service
 
-## 1.配置 idc.wiki 流量转发
+## 1. Configure idc.wiki traffic forwarding
 
-- 1.服务-->我的产品和服务-->管理产品-->添加普通转发 or 添加 IPLC 转发
-- 2.配置转发规则[tcp]，需转发地址，填写自己 vps 的 ip 以及 https+ws 的端口【示例：173.82.112.30:443】
-- 3.添加完成后会给分配 ip 和端口
+- 1. Services --> My Products and Services --> Manage Products --> Add Ordinary Forwarding or Add IPLC Forwarding
+- 2. Configure the forwarding rule [tcp], you need to forward the address, fill in the ip of your vps and the port of https+ws [example: 173.82.112.30:443]
+- 3. After the addition is complete, the ip and port will be assigned
 
-> 示例图
+> Sample image
 
-- 添加转发服务示例图
+- Add forwarding service example diagram
 
 <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_tcp_setting.png" width=400>
 
-- 添加完成后示例图
+- Example image after adding
 
 <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_rules.png" width=700>
 
-# 4.修改客户端
+# 4. Modify the client
 
-- 思路和 CDN 手动自选 ip 一样
-- 修改客户端地址、端口为 wikihost 分配的 IP or 域名、端口。
-- header or peer 部分填写科学上网的域名
+- The idea is the same as CDN manual self-selection of ip
+- Modify the client address and port to the IP or domain name and port assigned by wikihost.
+- Fill in the domain name of Science Online in the header or peer part
 
-## 客户端示例
+## client example
 
-- 下面的地址、端口都要填写上方示例图中，wikihost 分配的 ip 和端口
+- The following addresses and ports must be filled in the ip and port assigned by wikihost in the example above
 
-### 1.v2rayU
+### 1. v2rayU
 
-- 1.参考下图
-- 2.address、端口部分填写 wikihost 分配的 ip 和端口，host 部分填写科学上网的域名
-- 3.tls servername 同样填写科学上网的域名
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 v2rayU.png' width=400/>
+- 1. Refer to the figure below
+- 2. Fill in the ip and port assigned by wikihost in the address and port parts, and fill in the domain name of Science Online in the host part
+- 3.tls servername also fill in the domain name of Science Online
+  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manual change v2rayU.png' width=400/>
 
-### 2.Quantumult
+### 2. Quantumult
 
-- 1.参考下图
-- 2.地址、端口部分填写 wikihost 分配的 ip 和端口
-- 3.Host 部分填写科学上网的域名
-- 4.请求头-->Host 部分填写科学上网的域名
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 Quantumult01.png' width=400/>
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 Quantumult02.png' width=400/>
+- 1. Refer to the figure below
+- 2. Fill in the ip and port assigned by wikihost in the address and port
+- 3. For the Host part, fill in the domain name of Science Online
+- 4. Request header-->Host part fill in the domain name of Science Online
+     <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manually change Quantumult01.png' width=400/>
+     <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manually change Quantumult02.png' width=400/>
 
-### 3.ShadowRocket
+### 3. ShadowRocket
 
-- 1.参考下图
-- 2.地址、端口部分填写 wikihost 分配的 ip 和端口
-- 3.注意混淆部分->Host 部分填写科学上网的域名
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 ShadowRocket01.png' width=400/>
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 ShadowRocket02.png' width=400/>
+- 1. Refer to the figure below
+- 2. Fill in the ip and port assigned by wikihost in the address and port
+- 3. Pay attention to the confusing part -> the Host part fills in the domain name of Science Online
+     <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare choose ip manually change ShadowRocket01.png' width=400/>
+     <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare choose ip manually change ShadowRocket02.png' width=400/>
 
-### 4.v2rayN
+### 4. v2rayN
 
-- 1.参考下图
-- 2.地址、端口部分填写 wikihost 分配的 ip 和端口
-- 3.注意伪装域名部分填写科学上网的域名
-  <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 v2rayN.png' width=400/>
+- 1. Refer to the figure below
+- 2. Fill in the ip and port assigned by wikihost in the address and port
+- 3. Pay attention to fill in the domain name of Science Online in the disguised domain name part
+     <img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manual change v2rayN.png' width=400/>

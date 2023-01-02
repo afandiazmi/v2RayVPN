@@ -1,87 +1,87 @@
-- [1.准备工作](#1准备工作)
-- [2.配置流量转发服务](#2配置流量转发服务)
-- [3.线路建议](#3线路建议)
-- [4.游戏代理](#4游戏代理)
+- [1. Preparations] (#1 Preparations)
+- [2. Configure traffic forwarding service] (#2 Configure traffic forwarding service)
+- [3. Route Proposal] (#3 Route Proposal)
+- [4. Game Proxy](#4 Game Proxy)
 
-# 1.准备工作
+# 1. Preparation
 
-## 1.注意事项
+## 1. Precautions
 
-- 1.需要一台没被墙的 VPS（IPLC 除外），建议 HK、日本
-- 2.必须保证在不用流量转发服务的情况可以使用 XTLS/TLS+VLESS、Trojan，这里的 Trojan、XTLS/TLS+VLESS、websocket+tls 设置方法相同，下面是用 VLESS+TCP/XTLS 示例。
+- 1. Need a VPS that is not blocked (except IPLC), HK and Japan are recommended
+- 2. It must be ensured that XTLS/TLS+VLESS and Trojan can be used without the traffic forwarding service. The setting methods of Trojan, XTLS/TLS+VLESS and websocket+tls here are the same. The following is an example of using VLESS+TCP/XTLS.
 
-## 2.购买流量转发服务
+## 2. Purchase traffic forwarding service
 
-# 2.配置流量转发服务
+# 2. Configure traffic forwarding service
 
-## 1.VLESS+TCP+TLS
+## 1. VLESS+TCP+TLS
 
-### 1.添加普通转发[协议 tcp]
+### 1. Add common forwarding [protocol tcp]
 
 <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_add_01.png" width=800>
 
-### 2.填写 ip+端口号
+### 2. Fill in ip+port number
 
-- 格式
+- Format
 
 ```
 ip:port
-# 例子
+# example
 103.11.119.22:443
 ```
 
 <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_add_02.png" width=400>
 
-### 3.添加完毕后会给分配 ip/域名+port
+### 3. The ip/domain name+port will be assigned after adding
 
 <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_show_01.png" width=600>
 
-### 4.配置客户端
+### 4. Configure the client
 
-- 地址位置填写 wikihost 分配的 ip/域名
-- 端口则为 wikihost 分配的端口
-- 加密算法建议**_none_**并且**_不打开_**允许不安全连接
+- Fill in the address location with the ip/domain name assigned by wikihost
+- The port is the port assigned by wikihost
+- encryption algorithm suggested **_none_** and **_do not open_** allow insecure connections
 
-#### 1.Shadowrocket[VLESS]
+#### 1. Shadowrocket[VLESS]
 
-- Peer 名称 需填写你的域名
+- Peer name needs to fill in your domain name
   <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_Shadowrocket.png" width=400>
 
-#### 2.V2RayN
+#### 2. V2RayN
 
-- 暂无
+- None
 
-#### 3.V2RayNG
+#### 3. V2RayNG
 
-- 伪装域名需填写你的域名
+- The fake domain name needs to fill in your domain name
   <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/wikihost/wikihost_V2RayNG.png" width=400>
 
-## 2.TCP[IPLC 专属]
+## 2.TCP[IPLC exclusive]
 
-- [wikihost 添加步骤与 TCP+TLS 相同](#1vlesstcptls)
+- [wikihost add steps same as TCP+TLS](#1vlesstcptls)
 
-### 1.配置客户端
+### 1. Configure the client
 
-- 修改 地址+端口 为 wikihost 分配的 ip/域名+端口 即可
-- 加密不建议选择 none
-- 其余客户端相同
+- Modify the address + port to the ip/domain name + port assigned by wikihost
+- It is not recommended to choose none for encryption
+- the rest of the clients are the same
   <img src="https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/Quantumult_Setting_vmess.png" width=400>
 
-## 3.Trojan[推荐]
+## 3. Trojan [recommended]
 
-- 设置方法与[VLESS+TCP+TLS](#1vlesstcptls)
+- The setting method is the same as [VLESS+TCP+TLS](#1vlesstcptls)
 
-# 3.线路建议
+# 3. Line suggestion
 
-- 1.广东移动+hk vps
-- 2.上海 CN2+美西 or 其他地区
-- 3.上海联通+tw vps
-- 4.莞港 IPLC+hk vps
-- 5.苏日 IPLC+其他地区
-- 6.深港高速内网+hk or 其他地区
+- 1. Guangdong Mobile + hk vps
+- 2. Shanghai CN2+US West or other regions
+- 3.Shanghai Unicom+tw vps
+- 4. Guangang IPLC+hk vps
+- 5. Soviet-Japanese IPLC + other regions
+- 6. Shenzhen-Hong Kong Expressway Intranet+hk or other regions
 
-# 4.游戏代理
+# 4. Game Proxy
 
-- 游戏代理设置转发规则时必须选择第三个，TCP+UDP 同时设置。
-- 建议使用[Netch](https://github.com/NetchX/Netch/releases)
-- Netch 设置不是很复杂，这里不过多描述，[官网入门教程](https://github.com/NetchX/Netch/blob/master/docs/Quickstart.zh-CN.md)。
+- The third option must be selected when the game agent sets forwarding rules, and TCP+UDP should be set at the same time.
+- It is recommended to use [Netch](https://github.com/NetchX/Netch/releases)
+- Netch settings are not very complicated, so I won’t describe them too much here, [Official Website Getting Started Tutorial](https://github.com/NetchX/Netch/blob/master/docs/Quickstart.zh-CN.md).

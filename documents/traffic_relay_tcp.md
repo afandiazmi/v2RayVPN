@@ -1,23 +1,28 @@
-- [1.准备工作](#1准备工作)
-- [2.购买流量转发服务](#2购买流量转发服务)
-- [3.配置流量转发服务](#3配置流量转发服务)
-- [4.修改客户端](#4修改客户端)
-- [5.游戏代理](#5游戏代理)
+- [1. Preparations] (#1 Preparations)
+- [2. Purchase Traffic Forwarding Service](#2 Purchase Traffic Forwarding Service)
+- [3. Configure traffic forwarding service] (#3 configure traffic forwarding service)
+- [4.Modify Client](#4 Modify Client)
+- [5. Game Proxy](#5 Game Proxy)
 
-# 1.准备工作
-- 1.需要一台VPS。
-- 2.这里建议使用shadowsocks。
+# 1. Preparation
 
-# 2.购买流量转发服务
+- 1. A VPS is required.
+- 2. It is recommended to use shadowsocks here.
 
-# 3.配置流量转发服务
-## 1.配置idc.wiki流量转发
-- 1.服务-->我的产品和服务-->管理产品-->添加普通转发&添加IPLC转发，如果需要游戏代理，这里则必须选择第三个，同时转发TCP+UDP。
-- 2.配置转发规则【示例：173.82.112.30:37210】
+# 2. Purchase traffic forwarding service
 
-# 4.修改客户端
-- 客户端部分修改地址和端口为wikihost分配的端口+ip
+# 3. Configure traffic forwarding service
 
-# 5.游戏代理
-- 建议使用[Netch](https://github.com/NetchX/Netch/releases)
-- Netch设置不是很复杂，这里不过多描述，[官网入门教程](https://github.com/NetchX/Netch/blob/master/docs/Quickstart.zh-CN.md)。
+## 1. Configure idc.wiki traffic forwarding
+
+- 1. Service-->My Products and Services-->Manage Products-->Add Common Forwarding & Add IPLC Forwarding, if you need a game agent, you must choose the third one here, and forward TCP+UDP at the same time.
+- 2. Configure forwarding rules [Example: 173.82.112.30:37210]
+
+# 4. Modify the client
+
+- The client part modifies the address and port to the port + ip allocated by wikihost
+
+# 5. Game Proxy
+
+- It is recommended to use [Netch](https://github.com/NetchX/Netch/releases)
+- The Netch setting is not very complicated, so I will not describe it too much here, [Official Website Getting Started Tutorial](https://github.com/NetchX/Netch/blob/master/docs/Quickstart.zh-CN.md).

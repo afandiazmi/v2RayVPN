@@ -1,6 +1,8 @@
-- 1.推荐使用最新版本的bbr+fq或者bbr+cake
+- 1. It is recommended to use the latest version of bbr+fq or bbr+cake
+
 ```
-# 这里是别人评测的地址
+# Here is the address of other people's evaluation
 https://roov.org/2020/03/bbr-bbrplus-bbr2/
 ```
-- 2.测试订阅链接用的是最新的bbr+fq
+
+- 2. The test subscription link uses the latest bbr+fq

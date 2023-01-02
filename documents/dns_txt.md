@@ -1,4 +1,4 @@
-# dns 添加 TXT 记录
+# dns add TXT record
 
 ## 1.cloudflare
 

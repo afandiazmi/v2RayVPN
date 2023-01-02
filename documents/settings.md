@@ -1,29 +1,35 @@
-* * *
-- [1.开机自启](#1开机自启)
-  * [1.配置Nginx开机自启](#1配置Nginx开机自启)
-  * [2.配置v2ray_ws_tls开机自启](#2配置v2ray_ws_tls开机自启)
-  * [3.测试开机自启是否成功](#3测试开机自启是否成功)
-- [2.开启Centos bbr拥塞控制算法[我的测试机是centos 7]](#27开启centos-bbr拥塞控制算法我的测试机是centos-7)
-  * [1.检查是否安装bbr](#1检查是否安装bbr)
-  * [2.yum更新](#2yum更新)
-  * [3.查看系统版本](#3查看系统版本)
-  * [4.安装elrepo并升级内核](#4安装elrepo并升级内核)
-  * [5.更新grud文件并重启](#5更新grud文件并重启)
-  * [6.开机后检查内容是否为4.9及以上版本](#6开机后检查内容是否为4.9及以上版本)
-  * [7.开启bbr](#7开启bbr)
-  * [8.验证bbr是否开启成功](#8验证bbr是否开启成功)
-    + [测试方法1](#测试方法1)
-    + [测试方法2](#测试方法2)
-* * *
+---
 
-# 1.开机自启
-## 1.配置Nginx开机自启
-- 创建service文件
+- [1. Startup at boot](#1 Startup at boot)
+  - [1. Configure Nginx to start automatically at boot](#1 Configure Nginx to start automatically at boot)
+  - [2. Configure v2ray_ws_tls to start automatically at boot](#2 Configure v2ray_ws_tls to start at boot)
+  - [3. Test whether the auto-boot is successful] (#3 test whether the auto-start is successful)
+- [2. Enable Centos bbr congestion control algorithm [my test machine is centos 7]] (#27 enable centos-bbr congestion control algorithm and my test machine is centos-7)
+  - [1. Check if bbr is installed](#1 check if bbr is installed)
+  - [2.yum update](#2yum update)
+  - [3. View system version](#3 View system version)
+  - [4. Install elrepo and upgrade the kernel](#4 Install elrepo and upgrade the kernel)
+  - [5. Update the grud file and restart](#5 Update the grud file and restart)
+  - [6. Check whether the content is 4.9 and above after booting] (#6 Check whether the content is 4.9 and above after booting)
+  - [7. Open bbr] (#7 open bbr)
+  - [8. Verify that bbr is successfully opened] (#8 Verify that bbr is successfully opened)
+    - [Test method 1](#Test method 1)
+    - [Test method 2](#Test method 2)
+
+---
+
+# 1. Boot up automatically
+
+## 1. Configure Nginx to start automatically at boot
+
+- create service file
+
 ```
 cd /etc/systemd/system&&touch nginxReboot.service
 ```
 
-- 将下面内容复制到/etc/systemd/system/nginxReboot.service
+- Copy the following content to /etc/systemd/system/nginxReboot.service
+
 ```
 [Unit]
 Description=nginx - high performance web server
@@ -32,7 +38,7 @@ After=network.target remote-fs.target nss-lookup.target
 [Service]
 Type=forking
 PIDFile=/run/nginx.pid
-Environment=PATH=/root/.nvm/versions/node/v12.8.1/bin:/usr/bin/v2ray/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+Environment=PATH=/root/.nvm/versions/node/v12.8.1/bin:/usr/bin/v2ray/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/ bin:/root/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
 ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx.conf
 ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx.conf
 ExecReload=/usr/sbin/nginx -s reload
@@ -44,24 +50,30 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 
-- 设置开机自启
+- Set up to start automatically
+
 ```
 sudo systemctl enable nginxReboot.service
 ```
-- 可能出现的错误
+
+- possible errors
+
 ```
-# 可能会出现 (13: Permission denied) while connecting to upstream:[nginx]
-// 解决方法 执行下面的命令
+# May appear (13: Permission denied) while connecting to upstream:[nginx]
+// Solution Execute the following command
 setsebool -P httpd_can_network_connect 1
 ```
 
-## 2.配置v2ray_ws_tls开机自启
-- 创建service文件
+## 2. Configure v2ray_ws_tls to start automatically
+
+- create service file
+
 ```
 cd /etc/systemd/system&&touch v2ray_ws_tls.service
 ```
 
-- 将下面内容复制到/etc/systemd/system/v2ray_ws_tls.service
+- Copy the following content to /etc/systemd/system/v2ray_ws_tls.service
+
 ```
 [Unit]
 Description=V2Ray WS TLS Service
@@ -71,7 +83,7 @@ Wants=network.target
 [Service]
 Type=simple
 PIDFile=/run/v2rayWSTLS.pid
-ExecStart=/usr/bin/v2ray/v2ray -config /root/config_ws_tls.json
+ExecStart=/usr/bin/v2ray/v2ray-config /root/config_ws_tls.json
 Restart=on-failure
 # Don't restart in the case of configuration error
 RestartPreventExitStatus=23
@@ -79,129 +91,177 @@ RestartPreventExitStatus=23
 [Install]
 WantedBy=multi-user.target
 ```
-- 设置开机自启
+
+- Set up to start automatically
+
 ```
 sudo systemctl enable v2ray_ws_tls.service
 ```
-## 3.测试开机自启是否成功
-- 重启vps
+
+## 3. Test whether the startup is successful
+
+- restart vps
+
 ```
 reboot
 ```
-- 重启后查看程序是否正常启动
+
+- After restarting, check whether the program starts normally
+
 ```
-# 执行下方命令查看v2ray是否启动
+# Execute the following command to check whether v2ray is started
 ps -ef|grep v2ray
 
-root      4533     1  0 03:03 ?        00:00:00 /usr/bin/v2ray/v2ray -config /root/config_ws_tls.json
-root      4560  1287  0 03:04 pts/0    00:00:00 grep --color=auto v2ray
+root 4533 1 0 03:03 ? 00:00:00 /usr/bin/v2ray/v2ray-config /root/config_ws_tls.json
+root 4560 1287 0 03:04 pts/0 00:00:00 grep --color=auto v2ray
 
-# 执行下方命令查看nginx是否启动，
+# Execute the following command to check whether nginx is started,
 ps -ef|grep nginx
 ``
-root       762     1  0 02:20 ?        00:00:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf
-nginx      763   762  0 02:20 ?        00:00:00 nginx: worker process
-root      4562  1287  0 03:04 pts/0    00:00:00 grep --color=auto nginx
+root 762 1 0 02:20 ? 00:00:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf
+nginx 763 762 0 02:20 ? 00:00:00 nginx: worker process
+root 4562 1287 0 03:04 pts/0 00:00:00 grep --color=auto nginx
 ```
-# 2.开启Centos bbr拥塞控制算法[我的测试机是centos 7]
-## 1.检查是否安装bbr
-- 有一些vps会自带bbr模块 比如搬瓦工的某些机器，执行下面命令
+
+# 2. Turn on the Centos bbr congestion control algorithm [my test machine is centos 7]
+
+## 1. Check if bbr is installed
+
+- Some vps will have their own bbr module, such as some machines of bricklayers, execute the following command
+
 ```
 lsmod | grep bbr
 ```
-- 如果输出类似内容则已经开启bbr 到这里就可以结束了
+
+- If the output is similar, bbr has already been turned on, and it can end here
+
 ```
-tcp_bbr                20480  28
+tcp_bbr 20480 28
 ```
-## 2.yum更新
+
+## 2.yum update
+
 ```
 yum update
 ```
-## 3.查看系统版本
-- 执行下面命令
+
+## 3. Check the system version
+
+- Execute the following command
+
 ```
 cat /etc/redhat-release
 ```
 
-- 如果release后面的数字大于7.3即可
+- If the number behind the release is greater than 7.3
+
 ```
 CentOS Linux release 7.7.1908 (Core)
 ```
-## 4.安装elrepo并升级内核
-- 分别依次执行下面命令
+
+## 4. Install elrepo and upgrade the kernel
+
+- Execute the following commands in sequence
+
 ```
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
 yum --enablerepo=elrepo-kernel install kernel-ml -y
 ```
-- 正常情况下会输出下面内容
+
+- Under normal circumstances, the following content will be output
+
 ```
 Transaction Summary
-================================================================================
-Install  1 Package
+==================================================== ================================
+Install 1 Package
 Total download size: 39 M
-Installed size: 169 M
+Installed size: 169M
 Downloading packages:
-kernel-ml-4.9.0-1.el7.elrepo.x86_64.rpm                    |  39 MB   00:00
+kernel-ml-4.9.0-1.el7.elrepo.x86_64.rpm | 39 MB 00:00
 Running transaction check
 Running transaction test
 Transaction test succeeded
-Running transaction
+running transaction
 Warning: RPMDB altered outside of yum.
-  Installing : kernel-ml-4.9.0-1.el7.elrepo.x86_64                          1/1
-  Verifying  : kernel-ml-4.9.0-1.el7.elrepo.x86_64                          1/1
+   Installing: kernel-ml-4.9.0-1.el7.elrepo.x86_64 1/1
+   Verifying: kernel-ml-4.9.0-1.el7.elrepo.x86_64 1/1
 Installed:
-  kernel-ml.x86_64 0:4.9.0-1.el7.elrepo
+   kernel-ml.x86_64 0:4.9.0-1.el7.elrepo
 Complete!
 ```
-## 5.更新grud文件并重启
-- 依次执行下面的命令，重启后需要等待数秒重新使用ssh连接
+
+## 5. Update the grud file and restart
+
+- Execute the following commands in sequence, and wait for a few seconds to re-use the ssh connection after restarting
+
 ```
 egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \'
 grub2-set-default 0
 reboot
 ```
-## 6.开机后检查内容是否为4.9及以上版本
-- 执行下面的命令
+
+## 6. Check whether the content is 4.9 or above after booting
+
+- Execute the command below
+
 ```
 uname -r
 ```
-- 输出结果
+
+- output result
+
 ```
 5.3.7-1.el7.elrepo.x86_64
 ```
-## 7.开启bbr
-- 执行下面的命令
+
+## 7. Open bbr
+
+- Execute the command below
+
 ```
 vim /etc/sysctl.conf
 ```
-- 添加如下内容
+
+- Add the following content
+
 ```
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
 ```
-- 加载系统参数
+
+- Load system parameters
+
 ```
 sysctl -p
 ```
-## 8.验证bbr是否开启成功
-### 测试方法1
-- 执行下面的命令
+
+## 8. Verify that bbr is enabled successfully
+
+### Test Method 1
+
+- Execute the command below
+
 ```
 sysctl net.ipv4.tcp_available_congestion_control
 ```
-- 输出下面内容即为成功
+
+- Output the following content is successful
+
 ```
 net.ipv4.tcp_available_congestion_control = bbr cubic reno
 ```
 
-### 测试方法2
-- 执行下面的命令
+### Test Method 2
+
+- Execute the command below
+
 ```
 lsmod | grep bbr
 ```
-- 输出下面内容即为成功
-```
-tcp_bbr                20480  28
-```
 
+- Output the following content is successful
+
+```
+tcp_bbr 20480 28
+```

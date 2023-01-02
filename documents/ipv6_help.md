@@ -1,16 +1,16 @@
-# 注意事项
+# Precautions
 
-- ipv6 在本地环境只支持 ipv4 的情况下，只可以使用 Cloudflare【Trojan-Go ws、VLESS+TLS+WS、VMess+TLS+WS】
-- ipv6 可以结合此文档，使用自选 ip 实现更优的网络体验，[Cloudflare 优化方案](https://github.com/afandiazmi/v2RayVPN/main/blob/main/documents/optimize_V2Ray.md)
-- ipv6 vps 需设置 NAT64 来下载脚本以及脚本中需要下载文件的问题
+- If ipv6 only supports ipv4 in the local environment, only Cloudflare can be used [Trojan-Go ws, VLESS+TLS+WS, VMess+TLS+WS]
+- ipv6 can be combined with this document to achieve a better network experience by using self-selected ip, [Cloudflare optimization solution](https://github.com/afandiazmi/v2RayVPN/main/blob/main/documents/optimize_V2Ray.md)
+- ipv6 vps needs to set up NAT64 to download scripts and the problem of downloading files in scripts
 
-# NAT64 设置方法
+# NAT64 setting method
 
 ```
 echo -e "nameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
 ```
 
-# NAT64 公益列表
+# NAT64 public welfare list
 
 ```
 2a01:4f9:c010:3f02::1

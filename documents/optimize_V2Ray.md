@@ -1,104 +1,104 @@
-- [1.手动自选 ip](#1手动自选ip)
-  - [原理解析](#原理解析)
-  - [最优 ip 测试脚本](#最优ip测试脚本)
-  - [智能解析 DNS 对应的 IP](#智能解析dns对应的ipcname效果)
-  - [客户端配置](#客户端配置)
+- [1. Manual self-selected ip](#1 Manual self-selected ip)
+  - [Principle Analysis](#Principle Analysis)
+  - [optimal ip test script](#optimal ip test script)
+  - [Intelligent resolution of IP corresponding to DNS](#Smart resolution of ipcname effect corresponding to dns)
+  - [client configuration](#client configuration)
     - [1.v2rayU](#1v2rayu)
-    - [2.Quantumult](#2quantumult)
+    - [2. Quantumult] (#2quantumult)
     - [3.ShadowRocket](#3shadowrocket)
-    - [4.v2rayN](#4v2rayn)
-- [2.断流优化](#2断流优化)
+    - [4.v2rayN] (#4v2rayn)
+- [2. Cut-off optimization](#2 Cut-off optimization)
 
-# 1.手动自选 ip
+# 1. Manually select ip
 
-- 1.配置简单
-- 2.只需要客户端修改，可以多账号实现自选 IP。
-- 3.需要保证在不自选 ip 的情况可以正常使用
-- 4.目前只有 WS、gRPC 流量支持 CDN
+- 1. Simple configuration
+- 2. Only the client needs to be modified, and multiple accounts can be used to realize self-selected IP.
+- 3. It is necessary to ensure that it can be used normally without choosing an ip
+- 4. Currently only WS and gRPC traffic support CDN
 
-## 原理解析
+## Principle analysis
 
-- 1.这里的伪装域名、SNI、Peer 都是填写的自己真实的域名，当 TLS 验证域名进行握手时会通过这个进行握手，也就无需关心为什么 address 不是自己的域名但是还能 TLS 握手成功。
-- 2.如果既想要使用 TCP+TLS 又想要使用 WS+TLS，则不需要开启云朵。
-- 3.不开启云朵时，当 address 为自己的域名时，ip 解析为真实的 vps 服务器 ip 则为直连，当 address 为智能 DNS 解析的 IP 时，流量则会通过 Cloudflare 回源机制到 Cloudflare 服务器来实现 CDN 进行转发 ws，则为 CDN 转发。
-- 4.不开云朵，自选 ip 同样适用于被阻断的 ip。
+- 1. The fake domain name, SNI, and Peer here are all filled in with your own real domain name. When the TLS verification domain name is handshaked, it will be handshaked through this, so you don’t need to care why the address is not your own domain name but the TLS handshake is still successful.
+- 2. If you want to use both TCP+TLS and WS+TLS, you don't need to enable Cloud.
+- 3. When the cloud is not enabled, when the address is your own domain name, the ip is resolved to the real vps server ip, which is a direct connection. When the address is the IP resolved by the smart DNS, the traffic will go to the Cloudflare server through the Cloudflare back-to-source mechanism To achieve CDN forwarding ws, it is CDN forwarding.
+- 4. Do not open the cloud, self-selected ip is also applicable to blocked ip.
 
-## 最优 ip 测试工具
+## Optimal ip test tool
 
-- 支持 Linux、Windows、Android
-- 下面提供的 ip，不一定适合所有人，建议使用下方的工具找到最适合自己的 CDN ip。
+- Support Linux, Windows, Android
+- The ip provided below may not be suitable for everyone. It is recommended to use the tools below to find the most suitable CDN ip for you.
 
 ```
 https://github.com/XIU2/CloudflareSpeedTest
 https://github.com/badafans/better-cloudflare-ip
 ```
 
-# 智能解析 DNS 对应的 IP[CNAME 效果]
+# Intelligently resolve the IP corresponding to DNS [CNAME effect]
 
-- www.cloudflare.com、www.digitalocean.com 这两个则是使用 Cloudflare 的服务的域名，他会根据本地运营商的不同，来分配不同的 ip。
+- www.cloudflare.com and www.digitalocean.com are the domain names of Cloudflare’s services, and they will allocate different IPs according to different local operators.
 
-| 域名                 | 移动 | 联通 | 电信 |
-| -------------------- | ---- | ---- | ---- |
-| www.cloudflare.com   | xx   | xx   | xx   |
-| www.digitalocean.com | xx   | xx   | xx   |
+| Domain Name          | Mobile | China Unicom | Telecom |
+| -------------------- | ------ | ------------ | ------- |
+| www.cloudflare.com   | xx     | xx           | xx      |
+| www.digitalocean.com | xx     | xx           | xx      |
 
-## 客户端配置
+## Client configuration
 
-### 1.v2rayU
+### 1. v2rayU
 
-- 1.参考下图
-- 2.address 部分填写自定义 ip 或者上方提供的域名，host 部分填写科学上网的域名
-- 3.tls servername 同样填写科学上网的域名
-- 4.如果多个自选 ip，则复制刚刚添加好的配置，修改 address 部分即可。
+- 1. Refer to the figure below
+- 2. The address part fills in the custom ip or the domain name provided above, and the host part fills in the domain name of Science Online
+- 3.tls servername also fill in the domain name of Science Online
+- 4. If there are multiple self-selected ips, copy the configuration just added and modify the address part.
 
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 v2rayU.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manual change v2rayU.png' width=400/>
 
-### 2.Quantumult
+### 2. Quantumult
 
-- 1.参考下图
-- 2.地址部分填写自选 ip 或者上方提供的域名
-- 3.Host 部分填写科学上网的域名
-- 4.请求头-->Host 部分填写科学上网的域名
+- 1. Refer to the figure below
+- 2. In the address part, fill in the optional ip or the domain name provided above
+- 3. For the Host part, fill in the domain name of Science Online
+- 4. Request header-->Host part fill in the domain name of Science Online
 
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 Quantumult01.png' width=400/>
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 Quantumult02.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manually change Quantumult01.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manually change Quantumult02.png' width=400/>
 
-### 3.ShadowRocket
+### 3. ShadowRocket
 
-- 1.参考下图
-- 2.地址部分填写自选 ip 或者上方提供的域名
-- 3.注意混淆部分->Host 部分填写科学上网的域名
+- 1. Refer to the figure below
+- 2. In the address part, fill in the optional ip or the domain name provided above
+- 3. Pay attention to the confusing part -> the Host part fills in the domain name of Science Online
 
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 ShadowRocket01.png' width=400/>
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 ShadowRocket02.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare choose ip manually change ShadowRocket01.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare choose ip manually change ShadowRocket02.png' width=400/>
 
-### 4.v2rayN
+### 4. v2rayN
 
-- 1.参考下图
-- 2.地址部分填写自选 ip 或者上方提供的域名
-- 3.注意伪装域名部分填写科学上网的域名
+- 1. Refer to the figure below
+- 2. In the address part, fill in the optional ip or the domain name provided above
+- 3. Pay attention to fill in the domain name of Science Online in the disguised domain name part
 
-<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare自选ip 手动更改 v2rayN.png' width=400/>
+<img src='https://raw.githubusercontent.com/afandiazmi/v2RayVPN/main/fodder/CloudFlare self-selected ip manual change v2rayN.png' width=400/>
 
-### 5.Openwrt - Passwall
+### 5. Openwrt - Passwall
 
 #### VLESS-WS
 
-- 1.地址（支持域名）（address）填写：科学上网的域名
-- 2.域名（tlsServerName）填写：科学上网的域名
-- 3.WebSocket Host（ws host）填写：自定义 ip 或者上方提供的域名
+- 1. Fill in address (support domain name) (address): the domain name of Science Online
+- 2. Fill in the domain name (tlsServerName): the domain name of Science Online
+- 3. Fill in WebSocket Host (ws host): custom ip or the domain name provided above
 
 #### VLESS-gRPC
 
-- 1.地址（支持域名）(address)填写：自定义 ip 或者上方提供的域名
-- 2.域名（tlsServerName）填写：科学上网的域名
-- 3.注意记得填写 serviceName
+- 1. Address (support domain name) (address) fill in: custom ip or the domain name provided above
+- 2. Fill in the domain name (tlsServerName): the domain name of Science Online
+- 3. Remember to fill in the serviceName
 
-# 2.断流优化
+# 2. Cut-off optimization
 
-> [这里贴一下 V2Ray 白话文指南具体说明](https://guide.v2fly.org/advanced/cdn.html)
+> [Paste the V2Ray vernacular guide for specific instructions here](https://guide.v2fly.org/advanced/cdn.html)
 
-## cloudflare gRPC 断流
+## cloudflare gRPC cut off
 
-- [grpc 协议下 UDP 通过 cloudflare 会断](https://github.com/XTLS/Xray-core/issues/671)
-- [为什么套用 cloudflare grpc 会断流](https://github.com/v2fly/v2ray-core/discussions/1174)
+- [UDP via cloudflare under the grpc protocol will be broken](https://github.com/XTLS/Xray-core/issues/671)
+- [Why the application of cloudflare grpc will cut off](https://github.com/v2fly/v2ray-core/discussions/1174)

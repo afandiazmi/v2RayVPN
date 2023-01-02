@@ -1,131 +1,192 @@
-- [1.CentOS7、8 配置及使用firewall](#1centos78-配置及使用firewall)
-  * [1.systemctl是centos7的服务管理工具中主要的工具它融合之前service和chkconfig的功能于一体](#1systemctl是centos7的服务管理工具中主要的工具它融合之前service和chkconfig的功能于一体)
-  * [2.firewalld的基本使用](2firewalld的基本使用)
-  * [3.配置firewalld-cmd](3配置firewalld-cmd)
+- [1.CentOS7, 8 configuration and use of firewall](#1centos78-configuration and use of firewall)
+  - [1.systemctl is the main tool in the centos7 service management tool. It integrates the functions of the previous service and chkconfig] (#1systemctl is the main tool in the centos7 service management tool. It integrates the functions of the previous service and chkconfig)
+  - [2.Basic use of firewalld](Basic use of 2firewalld)
+  - [3. Configure firewalld-cmd] (3 Configure firewalld-cmd)
 
-# 1.CentOS7、8 配置及使用firewall
-## 1.systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。
-- 启动一个服务
+# 1. CentOS7, 8 configuration and use firewall
+
+## 1. systemctl is the main tool in the service management tool of CentOS7, which integrates the functions of service and chkconfig in one.
+
+- start a service
+
 ```
 systemctl start firewalld.service
 ```
-- 关闭一个服务
+
+- close a service
+
 ```
 systemctl stop firewalld.service
 ```
-- 重启一个服务
+
+- restart a service
+
 ```
 systemctl restart firewalld.service
 ```
-- 显示一个服务的状态
+
+- Display the status of a service
+
 ```
 systemctl status firewalld.service
 ```
-- 在开机时启用一个服务
+
+- Enable a service at boot time
+
 ```
 systemctl enable firewalld.service
 ```
-- 在开机时禁用一个服务
+
+- disable a service on boot
+
 ```
 systemctl disable firewalld.service
 ```
-- 查看服务是否开机启动
+
+- Check whether the service is started at boot
+
 ```
 systemctl is-enabled firewalld.service
 ```
-- 查看已启动的服务列表
+
+- View list of started services
+
 ```
 systemctl list-unit-files|grep enabled
 ```
-- 查看启动失败的服务列表
+
+- View the list of services that failed to start
+
 ```
 systemctl --failed
 ```
 
-## 2.firewalld的基本使用
-- 启动
+## 2.Basic use of firewalld
+
+- start up
+
 ```
 systemctl start firewalld
 ```
-- 查看状态
+
+- check status
+
 ```
 systemctl status firewalld
 ```
-- 停止
+
+- stop
+
 ```
 systemctl disable firewalld
 ```
-- 禁用
+
+- disabled
+
 ```
 systemctl stop firewalld
 ```
 
-### 3.配置firewalld-cmd
-- 查看版本
+### 3. Configure firewalld-cmd
+
+- view version
+
 ```
 firewall-cmd --version
 ```
-- 查看帮助
+
+- view help
+
 ```
 firewall-cmd --help
 ```
-- 显示状态
+
+- Display state
+
 ```
 firewall-cmd --state
 ```
-- 查看所有打开的端口
+
+- View all open ports
+
 ```
 firewall-cmd --zone=public --list-ports
 ```
-- 更新防火墙规则
+
+- Update firewall rules
+
 ```
 firewall-cmd --reload
 ```
-- 查看区域信息
+
+- View area information
+
 ```
 firewall-cmd --get-active-zones
 ```
-- 查看指定接口所属区域
+
+- View the area to which the specified interface belongs
+
 ```
 firewall-cmd --get-zone-of-interface=eth0
 ```
-- 拒绝所有包
+
+- deny all packets
+
 ```
 firewall-cmd --panic-on
 ```
-- 取消拒绝状态
+
+- Cancel rejection status
+
 ```
 firewall-cmd --panic-off
 ```
-- 查看是否拒绝
+
+- Check for rejection
+
 ```
 firewall-cmd --query-panic
 ```
-- 查看所通过的服务
+
+- View passed services
+
 ```
 firewall-cmd --list-services
 ```
-- 添加一个服务
+
+- add a service
+
 ```
 firewall-cmd --add-service openvpn
 ```
-- 永久添加一个服务
+
+- Permanently add a service
+
 ```
 firewall-cmd --permanent --add-service openvpn
 ```
-- 开启一个端口
+
+- open a port
+
 ```
-firewall-cmd --zone=public --add-port=80/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）
+firewall-cmd --zone=public --add-port=80/tcp --permanent (--permanent takes effect permanently, and will fail after restarting without this parameter)
 ```
-- 重新载入
+
+- reload
+
 ```
 firewall-cmd --reload
 ```
-- 查看端口是否开启
+
+- Check if the port is open
+
 ```
 firewall-cmd --zone= public --query-port=80/tcp
 ```
-- 删除开放端口
+
+- remove open ports
+
 ```
 firewall-cmd --zone= public --remove-port=80/tcp --permanent
 ```
