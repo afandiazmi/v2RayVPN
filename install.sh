@@ -880,7 +880,7 @@ initTLSNginxConfig() {
 	else
 		dnsTLSDomain=$(echo "${domain}" | awk -F "[.]" '{print $(NF-1)"."$NF}')
 		customPortFunction
-		local port=81
+		local port=80
 		if [[ -n "${customPort}" ]]; then
 			port=${customPort}
 		fi
@@ -942,7 +942,7 @@ updateRedirectNginxConf() {
 	fi
 	cat <<EOF >${nginxConfigPath}alone.conf
 server {
-	listen 81;
+	listen 80;
 	server_name ${domain};
 	return 302 https://${redirectDomain};
 }
@@ -1372,8 +1372,8 @@ initNginxConfig() {
 
 	cat <<EOF >${nginxConfigPath}alone.conf
 server {
-    listen 81;
-    listen [::]:81;
+    listen 8080;
+    listen [::]:8080;
     server_name ${domain};
     root /usr/share/nginx/html;
     location ~ /.well-known {allow all;}
@@ -4702,7 +4702,7 @@ setDokodemoDoorUnblockStreamingMediaOutbounds() {
     "rules": [
       {
         "type": "field",
-        "port": 81,
+        "port": 80,
         "domain": [
           "ip.sb",
           "geosite:${domainList//,/\",\"geosite:}"
@@ -4760,7 +4760,7 @@ setDokodemoDoorUnblockStreamingMediaInbounds() {
       "protocol": "dokodemo-door",
       "settings": {
         "address": "0.0.0.0",
-        "port": 81,
+        "port": 80,
         "network": "tcp",
         "followRedirect": false
       },
