@@ -1,24 +1,24 @@
 ---
-name: bug反馈 
-about: 请按照模版提交 
+name: bug feedback
+about: Please submit according to the template
 title: ''
-labels: '未处理'
+labels: 'unprocessed'
 assignees: ''
 ---
 
-> 请仔细填写每一项，并回复自己详细的错误信息
+> Please fill in each item carefully and reply with your own detailed error message
 
-**1.问题描述**
-- 请在此处填写
+**1. Problem Description**
+- Please fill in here
 
-**2.安装失败的错误内容或者截图**
-- 请在此处填写
+**2. Error content or screenshot of installation failure**
+- Please fill in here
 
-**3.系统版本**
-- 请在此处填写
+**3. System version**
+- Please fill in here
 
-**4.脚本版本**
-- 请在此处填写
+**4. Script version**
+- Please fill in here
 
-**5.核心类型及版本**
-- 请在此处填写
+**5. Core type and version**
+- Please fill in here
