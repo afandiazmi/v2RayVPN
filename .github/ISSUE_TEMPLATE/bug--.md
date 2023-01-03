@@ -1,57 +1,57 @@
 ---
-name: bug反馈 about: bug反馈 title: 'bug反馈'
+name: bug feedback about: bug feedback title: 'bug feedback'
 labels: ''
 assignees: ''
 ---
 
-> 请仔细填写每一项，并回复自己详细的错误信息
+> Please fill in each item carefully and reply with your own detailed error message
 
-- 不符合的issue会被直接关闭
+- Issues that do not meet the requirements will be closed directly
 
-**1.描述出现的问题**
+**1. Describe the problem**
 
 ```
-# 
+#
 ```
 
-**2.是否直接安装失败**
+**2. Whether the direct installation failed**
 
-- 否
+- no
 
-**3.是否重新build系统后尝试**
+**3. Whether to try after rebuilding the system**
 
-- 否
+- no
 
-**4.直接安装失败的错误内容或者截图**
+**4. The error content or screenshot of the direct installation failure**
 
 -
 
-**5.系统版本【例：Centos8】**
-> 最新版本脚本不支持Centos6
-> 是否更换Debian系统后再次安装
+**5. System version [Example: Centos8]**
+> The latest version script does not support Centos6
+> Whether to install again after replacing the Debian system
 
-- 否
+- no
 
-**6.脚本版本**
+**6.Script version**
 
-- 
+-
 
-**7.安装类型**
+**7. Installation type**
 
-- 个性化安装/全部安装
+- Individual install/All install
 
-**8.安装的核心版本**
+**8. Installed core version**
 
-- Xray-core【version】
+-Xray-core【version】
 
-**9.出现问题的协议类型**
+**9. The type of protocol in question**
 
-- 
+-
 
-**10.尝试重装后是否100%复现**
+**10. Is it 100% reproducible after trying to reinstall**
 
-- 否
+- no
 
-**11.是否仔细检查客户端与服务端的配置是否相同**
+**11. Check carefully whether the configurations of the client and the server are the same**
 
-- 否
+- no
