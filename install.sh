@@ -2423,7 +2423,7 @@ EOF
 
 	# VLESS_WS_TLS
 	if echo "${selectCustomInstallType}" | grep -q 1 || [[ "$1" == "all" ]]; then
-		fallbacksList=${fallbacksList}',{"path":"/${customPath}","dest":31297,"xver":1}'
+		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'","dest":31297,"xver":1}'
 		getClients "${configPath}../tmp/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
 		cat <<EOF >/etc/v2RayVPN/v2ray/conf/03_VLESS_WS_inbounds.json
 {
@@ -2499,7 +2499,7 @@ EOF
 
 	# VMess_WS
 	if echo "${selectCustomInstallType}" | grep -q 3 || [[ "$1" == "all" ]]; then
-		fallbacksList=${fallbacksList}',{"path":"/${customPath}","dest":31299,"xver":1}'
+		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'","dest":31299,"xver":1}'
 
 		getClients "${configPath}../tmp/05_VMess_WS_inbounds.json" "${addClientsStatus}"
 
@@ -2836,7 +2836,7 @@ EOF
 
 	# VLESS_WS_TLS
 	if echo "${selectCustomInstallType}" | grep -q 1 || [[ "$1" == "all" ]]; then
-		fallbacksList=${fallbacksList}',{"path":"/${customPath}","dest":31297,"xver":1}'
+		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'","dest":31297,"xver":1}'
 		getClients "${configPath}../tmp/03_VLESS_WS_inbounds.json" "${addClientsStatus}"
 		cat <<EOF >/etc/v2RayVPN/xray/conf/03_VLESS_WS_inbounds.json
 {
@@ -2912,7 +2912,7 @@ EOF
 
 	# VMess_WS
 	if echo "${selectCustomInstallType}" | grep -q 3 || [[ "$1" == "all" ]]; then
-		fallbacksList=${fallbacksList}',{"path":"/${customPath}","dest":31299,"xver":1}'
+		fallbacksList=${fallbacksList}',{"path":"/'${customPath}'","dest":31299,"xver":1}'
 		getClients "${configPath}../tmp/05_VMess_WS_inbounds.json" "${addClientsStatus}"
 		cat <<EOF >/etc/v2RayVPN/xray/conf/05_VMess_WS_inbounds.json
 {
@@ -5170,14 +5170,6 @@ selectCoreInstall() {
 	esac
 }
 
-installVNStat() {
-	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
-}
-checkVNStat() {
-	vnstat -i eth0
-}
-
-
 # v2ray-core install
 v2rayCoreInstall() {
 	cleanUp xrayClean
@@ -5436,11 +5428,18 @@ manageHysteria() {
 		journalctl -fu hysteria
 	fi
 }
+
+installVNStat() {
+	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
+}
+checkVNStat() {
+	vnstat -i eth0
+}
 # main menu
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n======================================================================================="
-echoContent white  " █████╗ ███████╗ █████╗ ███╗   ██╗██████╗ ██╗     █████╗ ███████╗███╗   ███╗██╗"
+echoContent white	 " █████╗ ███████╗ █████╗ ███╗   ██╗██████╗ ██╗     █████╗ ███████╗███╗   ███╗██╗"
 echoContent white  "██╔══██╗██╔════╝██╔══██╗████╗  ██║██╔══██╗██║    ██╔══██╗╚══███╔╝████╗ ████║██║"
 echoContent white  "███████║█████╗  ███████║██╔██╗ ██║██║  ██║██║    ███████║  ███╔╝ ██╔████╔██║██║"
 echoContent white  "██╔══██║██╔══╝  ██╔══██║██║╚██╗██║██║  ██║██║    ██╔══██║ ███╔╝  ██║╚██╔╝██║██║"
