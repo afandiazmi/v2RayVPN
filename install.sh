@@ -5170,6 +5170,14 @@ selectCoreInstall() {
 	esac
 }
 
+installVNStat() {
+	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
+}
+checkVNStat() {
+	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
+}
+
+
 # v2ray-core install
 v2rayCoreInstall() {
 	cleanUp xrayClean
@@ -5482,6 +5490,9 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 	echoContent skyBlue "-------------------------Script management--------------------"
 	echoContent yellow "19.View log"
 	echoContent yellow "20.Uninstall script"
+	echoContent skyBlue "-------------------------VNStat--------------------"
+	echoContent yellow "21.Install VNStat"
+	echoContent yellow "22.Run VNStat"
 	echoContent red "=============================================================="
 	mkdirTools
 	aliasInstall
@@ -5546,6 +5557,12 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 		;;
 	20)
 		unInstall 1
+		;;
+	21)
+		installVNStat
+		;;
+	22)
+		checkVNStat
 		;;
 	esac
 }
