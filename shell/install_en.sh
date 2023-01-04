@@ -5428,6 +5428,13 @@ manageHysteria() {
 		journalctl -fu hysteria
 	fi
 }
+
+installVNStat() {
+	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
+}
+checkVNStat() {
+	vnstat -i eth0
+}
 # main menu
 menu() {
 	cd "$HOME" || exit
@@ -5482,6 +5489,9 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 	echoContent skyBlue "-------------------------Script management--------------------"
 	echoContent yellow "19.View log"
 	echoContent yellow "20.Uninstall script"
+	echoContent skyBlue "-------------------------VNStat--------------------"
+	echoContent yellow "21.Install VNStat"
+	echoContent yellow "22.Run VNStat"
 	echoContent red "=============================================================="
 	mkdirTools
 	aliasInstall
@@ -5546,6 +5556,12 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 		;;
 	20)
 		unInstall 1
+		;;
+	21)
+		installVNStat
+		;;
+	22)
+		checkVNStat
 		;;
 	esac
 }
