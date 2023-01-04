@@ -5174,7 +5174,7 @@ installVNStat() {
 	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
 }
 checkVNStat() {
-	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
+	vnstat -i eth0
 }
 
 
