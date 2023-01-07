@@ -5432,9 +5432,87 @@ manageHysteria() {
 installVNStat() {
 	apt install vnstat && systemctl start vnstat && systemctl enable vnstat
 }
+
 checkVNStat() {
 	vnstat -i eth0
 }
+
+senaraiBugTelco() {
+	echoContent skyBlue "\n Senarai Bug Telco MALAYSIA"
+	echoContent red "\n=============================================================="
+	echoContent yellow "1.Celcom"
+	echoContent yellow "2.Digi"
+	echoContent yellow "3.Maxis"
+	echoContent yellow "4.U-Mobile"
+	echoContent yellow "5.Unifi"
+	echoContent yellow "6.YES"
+
+	read -r -p "Please select:" selectType
+
+	case ${selectType} in
+	1)
+		bugCelcom
+		;;
+	2)
+		bugDigi
+		;;
+	3)
+		bugMaxis
+		;;
+	4)
+		buguMobile
+		;;
+	5)
+		bugUnifi
+		;;
+	6)
+		bugYES
+		;;
+	esac
+
+}
+
+bugCelcom() {
+	echoContent skyBlue "\n Bug Celcom"
+	echoContent red "\n=============================================================="
+	echoContent yellow "onlinepayment.celcom.com.my"
+}
+
+bugDigi() {
+	echoContent skyBlue "\n Bug Digi"
+	echoContent red "\n=============================================================="
+	echoContent yellow "BOOSTER RM1 DAN RM35 SAHAJA- VMESS WS NO TLS PORT 80 CLOUDFLARE [KUNING]- Refere: https://www.youtube.com/watch?v=60UoWd4B11Q"
+	echoContent yellow "mydigiapp.digi.com.my - custom wss"
+	echoContent yellow "useinsider.com - custom wss"
+}
+
+bugMaxis() {
+	echoContent skyBlue "\n Bug Maxis"
+	echoContent red "\n=============================================================="
+	echoContent yellow "Guna cloudfront- business.maxis.com.my"
+	echoContent yellow "langgan maxis tv- api-gateway-global.viu.com"
+}
+
+buguMobile() {
+	echoContent skyBlue "\n Bug U-Mobile"
+	echoContent red "\n=============================================================="
+	echoContent yellow "ulist.com.my"
+	echoContent yellow "wap.u.com.my"
+}
+
+bugUnifi() {
+	echoContent skyBlue "\n Bug Unifi"
+	echoContent red "\n=============================================================="
+	echoContent yellow "playtv.unifi.com.my"
+}
+
+bugYES() {
+	echoContent skyBlue "\n Bug Unifi"
+	echoContent red "\n=============================================================="
+	echoContent yellow "ytlfoundation.org"
+	echoContent yellow "who.int"
+}
+
 # main menu
 menu() {
 	cd "$HOME" || exit
@@ -5492,6 +5570,8 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 	echoContent skyBlue "-------------------------VNStat--------------------"
 	echoContent yellow "21.Install VNStat"
 	echoContent yellow "22.Run VNStat"
+	echoContent skyBlue "-------------------------Senarai Bug Telco--------------------"
+	echoContent yellow "23.Lihat Senarai"
 	echoContent red "=============================================================="
 	mkdirTools
 	aliasInstall
@@ -5562,6 +5642,9 @@ echoContent white  "╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═
 		;;
 	22)
 		checkVNStat
+		;;
+	23)
+		senaraiBugTelco
 		;;
 	esac
 }
